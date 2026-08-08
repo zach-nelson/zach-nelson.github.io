@@ -1,246 +1,465 @@
-<!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Phantom by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zach Nelson — Geospatial Data Scientist</title>
+  <meta name="description" content="Senior Geospatial Data Scientist and Science Coordinator for the Inyo/Los Angeles Long-Term Water Agreement. Groundwater-dependent ecosystems, remote sensing, wildlife habitat ecology, and reproducible science." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --name: #f4f7f5;
+      --ink: #152018;
+      --muted: #3d4f45;
+      --sage: #6f8f6a;
+      --water: #2a6f7e;
+      --sand: #c9b896;
+      --paper: #eef2ee;
+      --line: rgba(21, 32, 24, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+    }
+    a { color: var(--water); }
+    .skip {
+      position: absolute;
+      left: -9999px;
+    }
+    .skip:focus {
+      left: 0.75rem;
+      top: 0.75rem;
+      z-index: 40;
+      background: var(--paper);
+      padding: 0.5rem 0.75rem;
+    }
 
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      color: var(--name);
+      overflow: hidden;
+    }
+    .hero-sky {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(18, 28, 34, 0.15) 0%, rgba(18, 28, 34, 0.55) 55%, rgba(12, 20, 16, 0.88) 100%),
+        linear-gradient(115deg, #8eb4c4 0%, #b8c9a8 38%, #d4c4a0 62%, #7a8f6e 100%);
+      animation: skyShift 22s ease-in-out infinite alternate;
+    }
+    @keyframes skyShift {
+      from { filter: saturate(1) hue-rotate(0deg); }
+      to { filter: saturate(1.08) hue-rotate(-8deg); }
+    }
+    .hero-ridges {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 58%;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 520' preserveAspectRatio='none'%3E%3Cpath fill='%232a3a32' d='M0 320 L180 260 L360 300 L520 200 L700 280 L900 160 L1100 240 L1280 190 L1440 250 L1440 520 L0 520 Z'/%3E%3Cpath fill='%231e2c26' d='M0 380 L220 320 L400 360 L600 280 L820 340 L1040 260 L1240 320 L1440 290 L1440 520 L0 520 Z'/%3E%3Cpath fill='%23152018' d='M0 440 L300 400 L560 430 L800 380 L1100 420 L1440 390 L1440 520 L0 520 Z'/%3E%3C/svg%3E")
+        bottom / 100% 100% no-repeat;
+      animation: ridgeDrift 28s ease-in-out infinite alternate;
+    }
+    @keyframes ridgeDrift {
+      from { transform: translateX(0) scale(1); }
+      to { transform: translateX(-1.5%) scale(1.02); }
+    }
+    .hero-floor {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 18%;
+      background: linear-gradient(180deg, transparent, rgba(30, 50, 40, 0.5));
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 42rem;
+      animation: riseIn 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .brand {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(2.8rem, 8vw, 4.6rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 0.98;
+      margin: 0 0 0.85rem;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+    }
+    .headline {
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      font-weight: 500;
+      margin: 0 0 0.65rem;
+      max-width: 34rem;
+      color: rgba(244, 247, 245, 0.95);
+    }
+    .support {
+      margin: 0 0 1.4rem;
+      max-width: 34rem;
+      color: rgba(244, 247, 245, 0.78);
+      font-size: 0.98rem;
+    }
+    .ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+    .ctas a {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.7rem 1.15rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+    .ctas a:hover { transform: translateY(-1px); }
+    .cta-primary {
+      background: var(--sand);
+      color: var(--ink);
+    }
+    .cta-secondary {
+      background: transparent;
+      color: var(--name);
+      border: 1px solid rgba(244, 247, 245, 0.45);
+    }
 
-							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
-								</a>
+    section {
+      padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    section h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1.55rem, 3vw, 2rem);
+      font-weight: 550;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .section-lead {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      max-width: 40rem;
+    }
 
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
+    .about {
+      background: #e4ebe4;
+    }
+    .about p {
+      margin: 0 0 1rem;
+      max-width: 42rem;
+      color: var(--muted);
+    }
+    .about p:last-child { margin-bottom: 0; }
+    .years {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1.25rem;
+      margin: 1.5rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .years li {
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+    .years strong {
+      display: block;
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--water);
+      line-height: 1.1;
+    }
 
-						</div>
-					</header>
+    .duties-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid var(--line);
+    }
+    .duties-list li {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      padding-left: 1.1rem;
+      position: relative;
+    }
+    .duties-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.25rem;
+      width: 0.4rem;
+      height: 0.4rem;
+      background: var(--sage);
+      border-radius: 50%;
+    }
 
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
-							<li><a href="generic.html">Tempus etiam</a></li>
-							<li><a href="generic.html">Consequat dolor</a></li>
-							<li><a href="elements.html">Elements</a></li>
-						</ul>
-					</nav>
+    .work-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid var(--line);
+    }
+    .work-list li {
+      display: grid;
+      grid-template-columns: minmax(7rem, 9rem) 1fr;
+      gap: 1rem;
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .work-list .domain {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--water);
+      font-weight: 600;
+      padding-top: 0.2rem;
+    }
+    .work-list h3 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 550;
+      margin: 0 0 0.3rem;
+    }
+    .work-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<header>
-								<h1>This is Phantom, a free, fully responsive site<br />
-								template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
-								<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam. Lorem ipsum dolor sit amet nullam dolore.</p>
-							</header>
-							<section class="tiles">
-								<article class="style1">
-									<span class="image">
-										<img src="images/pic01.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Magna</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="images/pic02.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Lorem</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="images/pic03.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Feugiat</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style4">
-									<span class="image">
-										<img src="images/pic04.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Tempus</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style5">
-									<span class="image">
-										<img src="images/pic05.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Aliquam</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style6">
-									<span class="image">
-										<img src="images/pic06.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Veroeros</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="images/pic07.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Ipsum</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="images/pic08.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Dolor</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style1">
-									<span class="image">
-										<img src="images/pic09.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Nullam</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style5">
-									<span class="image">
-										<img src="images/pic10.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Ultricies</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style6">
-									<span class="image">
-										<img src="images/pic11.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Dictum</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style4">
-									<span class="image">
-										<img src="images/pic12.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Pretium</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-							</section>
-						</div>
-					</div>
+    .tools-block {
+      background: #e4ebe4;
+    }
+    .tool-groups {
+      display: grid;
+      gap: 1.25rem;
+    }
+    @media (min-width: 700px) {
+      .tool-groups { grid-template-columns: 1fr 1fr; }
+    }
+    .tool-groups h3 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.1rem;
+      margin: 0 0 0.35rem;
+      font-weight: 550;
+    }
+    .tool-groups p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-								<h2>Get in touch</h2>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<input type="text" name="name" id="name" placeholder="Name" />
-										</div>
-										<div class="field half">
-											<input type="email" name="email" id="email" placeholder="Email" />
-										</div>
-										<div class="field">
-											<textarea name="message" id="message" placeholder="Message"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send" class="primary" /></li>
-									</ul>
-								</form>
-							</section>
-							<section>
-								<h2>Follow</h2>
-								<ul class="icons">
-									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
+    .pubs ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+    }
+    .pubs li { margin: 0 0 0.75rem; }
+    .pubs li:last-child { margin-bottom: 0; }
 
-			</div>
+    .contact {
+      background: var(--ink);
+      color: var(--name);
+      max-width: none;
+      padding-left: clamp(1.25rem, 4vw, 3rem);
+      padding-right: clamp(1.25rem, 4vw, 3rem);
+    }
+    .contact-inner { max-width: 920px; margin: 0 auto; }
+    .contact h2 { color: var(--name); }
+    .contact .section-lead { color: rgba(244,247,245,0.65); }
+    .contact a { color: var(--sand); }
+    .contact p { margin: 0 0 0.5rem; }
+    .contact p:last-child { margin: 0; }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    footer.site {
+      padding: 1.25rem clamp(1.25rem, 4vw, 3rem) 2rem;
+      max-width: 920px;
+      margin: 0 auto;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
 
-	</body>
+    @media (max-width: 560px) {
+      .work-list li { grid-template-columns: 1fr; gap: 0.35rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-sky, .hero-ridges, .hero-content { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#about">Skip to content</a>
+
+  <header class="hero">
+    <div class="hero-sky" aria-hidden="true"></div>
+    <div class="hero-ridges" aria-hidden="true"></div>
+    <div class="hero-floor" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1 class="brand">Zach Nelson</h1>
+      <p class="headline">Geospatial science for groundwater-dependent ecosystems.</p>
+      <p class="support">
+        Senior Geospatial Data Scientist and Science Coordinator for the Long-Term Water Agreement
+        between Inyo County and the City of Los Angeles.
+      </p>
+      <div class="ctas">
+        <a class="cta-primary" href="#role">Role &amp; duties</a>
+        <a class="cta-secondary" href="#contact">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="about" id="about">
+    <h2>About</h2>
+    <p>
+      I work primarily as a Senior Geospatial Data Scientist and Science Coordinator responsible for
+      overseeing science relating to the Long-Term Water Agreement between Inyo County and the City of Los Angeles.
+    </p>
+    <p>
+      I’m a GIS expert, remote sensing specialist, small unmanned aerial system pilot in command, and
+      wildlife habitat ecologist, experienced in statistical, grid-based, and agent-based modeling.
+    </p>
+    <p>
+      I have a special interest in literate and functional programming, reproducible and open science,
+      automated reporting, data pipelining (<code>targets</code>), and application development
+      (R Shiny and ArcGIS Online mapping applications).
+    </p>
+    <ul class="years" aria-label="Domain experience">
+      <li><strong>14 yrs</strong> Groundwater-dependent ecosystems</li>
+      <li><strong>24 yrs</strong> Avian habitat ecology</li>
+      <li><strong>22 yrs</strong> Remote sensing &amp; mapping</li>
+    </ul>
+  </section>
+
+  <section id="role">
+    <h2>Role &amp; duties</h2>
+    <p class="section-lead">
+      Senior Scientist, Inyo County Water Department — research, monitoring, geospatial systems,
+      staff supervision, and representation before governing bodies.
+    </p>
+    <ul class="duties-list">
+      <li>Direct research and monitoring related to riparian and groundwater-dependent ecosystems, wildlife ecology, geospatial applications, and remote sensing</li>
+      <li>Develop and lead interdisciplinary research projects that improve monitoring and management to protect or enhance the environment</li>
+      <li>Coordinate with senior scientific and management staff to determine and implement Owens Valley management goals and strategies</li>
+      <li>Collect and analyze field and laboratory data; prepare and deliver written and oral technical reports</li>
+      <li>Supervise and train department field staff; conduct annual performance evaluations</li>
+      <li>Prepare staffing and budgets for activities and studies; assist in preparation and management of departmental budgets</li>
+      <li>Participate in department program development; obtain funding; manage grants and contracts related to monitoring and research</li>
+      <li>Develop and manage departmental work plans and grants</li>
+      <li>Represent the department before the Board of Supervisors, the Water Commission, the Standing Committee, the Technical Group, other governmental bodies, private organizations, and the public</li>
+    </ul>
+  </section>
+
+  <section id="work">
+    <h2>Selected work</h2>
+    <p class="section-lead">Where monitoring, models, and management meet.</p>
+    <ul class="work-list">
+      <li>
+        <span class="domain">GDE / LTWA</span>
+        <div>
+          <h3>Science coordination for the Water Agreement</h3>
+          <p>Direct research and monitoring of riparian and groundwater-dependent systems; advise legal counsel and elected officials on ecological change associated with groundwater extraction.</p>
+        </div>
+      </li>
+      <li>
+        <span class="domain">Geospatial</span>
+        <div>
+          <h3>Data models &amp; mapping applications</h3>
+          <p>GIS archives for ecological and hydrological data; wildlife habitat modeling, vegetation response to disturbance, change detection, and environmental compliance tooling across ArcGIS Enterprise and AGOL.</p>
+        </div>
+      </li>
+      <li>
+        <span class="domain">Remote sensing</span>
+        <div>
+          <h3>UAV, photogrammetry &amp; Earth Engine</h3>
+          <p>Small UAS PIC workflows, optical change detection, and reproducible pipelines for valley-scale observation.</p>
+        </div>
+      </li>
+      <li>
+        <span class="domain">Open science</span>
+        <div>
+          <h3>Literate programming &amp; automated reporting</h3>
+          <p>targets pipelines, Quarto / R Markdown reporting, R Shiny and AGOL apps that keep methods auditable for decision makers.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="tools-block" id="tools">
+    <h2>Tools &amp; methods</h2>
+    <p class="section-lead">Day-to-day stack for analysis, field data, and decision support.</p>
+    <div class="tool-groups">
+      <div>
+        <h3>Geospatial &amp; remote sensing</h3>
+        <p>ArcGIS Pro, Field Maps, ArcGIS Online / Enterprise, Earth Engine (Python API), UAV / photogrammetry, database design and administration</p>
+      </div>
+      <div>
+        <h3>Analysis &amp; pipelines</h3>
+        <p>R (RStudio), Python (VS Code), SQL, <code>targets</code>, statistical and numerical modeling, grid-based and agent-based models</p>
+      </div>
+      <div>
+        <h3>Applications &amp; reporting</h3>
+        <p>R Shiny, AGOL mapping applications, automated reporting, literate / functional programming, GitHub</p>
+      </div>
+      <div>
+        <h3>Science domains</h3>
+        <p>Groundwater-dependent ecosystems, avian habitat ecology, vegetation studies, science-based decision support for local government</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pubs" id="publications">
+    <h2>Selected publications</h2>
+    <p class="section-lead">Sagebrush fire ecology and spatial simulation (lead author).</p>
+    <ul>
+      <li>Nelson, Z. J., Weisberg, P. J., Kitchen, S. G. 2013. Influence of climate and environment on post-fire recovery of mountain big sagebrush. <em>International Journal of Wildland Fire</em> 23(1): 131–142.</li>
+      <li>Nelson, Z. J., Weisberg, P. J., Kitchen, S. G. 2008. Post-fire Recovery of Mountain Big Sagebrush Communities in Utah and Nevada. <em>SageSTEP News</em> 9: 4–7.</li>
+      <li>Additional EPSCoR and conference presentations on multi-scale vegetation response, fire regime interactions, and individual-based zone-of-influence models (2007–2013).</li>
+    </ul>
+  </section>
+
+  <section id="education">
+    <h2>Education &amp; training</h2>
+    <p class="section-lead" style="margin-bottom:0.75rem">
+      <strong style="color:var(--ink)">M.Sc., Wildlife — Natural Resources Management</strong>, Cal Poly Humboldt (2007) · GIS, wildlife management, multi-model inference<br />
+      <strong style="color:var(--ink)">B.S., Biochemistry</strong>, Western Washington University (2000)
+    </p>
+    <p style="margin:0;color:var(--muted)">Groundwater Flow and Transport Modeling with GMS (January 2023)</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <h2>Contact</h2>
+      <p class="section-lead">
+        Bishop, California. County role listed at
+        <a href="https://inyowater.org/contact-us/">inyowater.org</a>.
+      </p>
+      <p><a href="mailto:zjnelson2010@gmail.com">zjnelson2010@gmail.com</a></p>
+      <p><a href="https://github.com/zach-nelson">github.com/zach-nelson</a></p>
+    </div>
+  </section>
+
+  <footer class="site">
+    © Zach Nelson · Open source on
+    <a href="https://github.com/zach-nelson/zach-nelson.github.io">GitHub</a>
+  </footer>
+</body>
 </html>
