@@ -129,8 +129,14 @@
     
     #timeline-viz {
       width: 100%;
-      min-height: 500px;
+      min-height: 560px;
       background: var(--white);
+    }
+    
+    @media (max-width: 768px) {
+      #timeline-viz {
+        min-height: 480px;
+      }
     }
     
     .scrubber-controls {
@@ -412,8 +418,12 @@
       pointer-events: none;
       user-select: none;
       font-family: 'Inter', sans-serif;
-      opacity: 0.4;
+      opacity: 0;
       transition: opacity 0.2s ease;
+    }
+    
+    .node.hub text {
+      opacity: 0.7;
     }
     
     .node:hover text,
@@ -460,7 +470,7 @@
       }
       
       #timeline-viz {
-        min-height: 400px;
+        min-height: 480px;
       }
       
       .legend-items {
@@ -763,12 +773,12 @@
     const svg = d3.select("#timeline-viz");
     const container = document.querySelector("#timeline-viz");
     const width = container.clientWidth;
-    const height = 500;
+    const height = window.innerWidth > 768 ? 560 : 480;
     
     svg.attr("viewBox", `0 0 ${width} ${height}`);
     
     // Margins and layout
-    const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
     const graphWidth = width - margin.left - margin.right;
     const graphHeight = height - margin.top - margin.bottom;
     
@@ -852,12 +862,48 @@
       );
     }
     
+    // Time scale for x-anchoring (maps year to x position on path)
+    const timeScale = d3.scaleLinear()
+      .domain([1977, 2026])
+      .range([0, graphWidth]);
+    
+    // Y-band targets for different categories
+    const yBands = {
+      baseline: pathY,
+      fieldwork: pathY - 80,
+      ecology: pathY - 60,
+      science: pathY - 40,
+      technical: pathY + 60,
+      practice: pathY + 80,
+      modeling: pathY + 40,
+      application: pathY + 100,
+      social: pathY - 100
+    };
+    
     // Create force simulation
     let simulation = d3.forceSimulation()
-      .force("link", d3.forceLink().id(d => d.id).distance(65))
-      .force("charge", d3.forceManyBody().strength(-220))
-      .force("center", d3.forceCenter(graphWidth / 2, graphHeight / 3))
-      .force("collision", d3.forceCollide().radius(18));
+      .force("link", d3.forceLink().id(d => d.id).distance(40))
+      .force("charge", d3.forceManyBody().strength(-120))
+      .force("collision", d3.forceCollide().radius(d => {
+        // Calculate label width for collision
+        const isHub = siteData.hubNodes && siteData.hubNodes.includes(d.id);
+        return isHub ? 35 : 12;
+      }))
+      .force("x", d3.forceX().x(d => {
+        // Anchor each node to its year on the timeline
+        return timeScale(d.startYear);
+      }).strength(0.3))
+      .force("y", d3.forceY().y(d => {
+        // Push nodes into category bands
+        return yBands[d.category] || pathY;
+      }).strength(0.2))
+      .force("bounds", () => {
+        // Keep nodes inside canvas bounds
+        simulation.nodes().forEach(node => {
+          node.x = Math.max(10, Math.min(graphWidth - 10, node.x));
+          node.y = Math.max(10, Math.min(graphHeight - 10, node.y));
+        });
+      });
     
     if (prefersReducedMotion) {
       simulation.alpha(0);
@@ -892,7 +938,10 @@
       
       const nodeEnter = node.enter()
         .append("g")
-        .attr("class", d => `node ${d.category}`)
+        .attr("class", d => {
+          const isHub = siteData.hubNodes && siteData.hubNodes.includes(d.id);
+          return `node ${d.category}${isHub ? ' hub' : ''}`;
+        })
         .call(d3.drag()
           .on("start", dragStarted)
           .on("drag", dragged)
@@ -954,6 +1003,12 @@
     }
     
     function ticked() {
+      // Clamp positions to bounds
+      simulation.nodes().forEach(d => {
+        d.x = Math.max(15, Math.min(graphWidth - 15, d.x));
+        d.y = Math.max(15, Math.min(graphHeight - 15, d.y));
+      });
+      
       link
         .attr("x1", d => d.source.x)
         .attr("y1", d => d.source.y)

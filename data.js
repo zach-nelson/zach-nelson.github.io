@@ -77,9 +77,9 @@ const siteData = {
     { id: "r-markdown", label: "R Markdown", startYear: 2013, category: "practice" },
     { id: "reproducible", label: "Reproducible research", startYear: 2013, category: "practice" },
     { id: "automation", label: "Automation", startYear: 2013, category: "practice" },
-    { id: "pipelines", label: "Data pipelines", startYear: 2015, category: "technical" },
-    { id: "reporting", label: "Automated reporting", startYear: 2015, category: "application" },
-    { id: "efficiency", label: "Practical efficiency", startYear: 2015, category: "practice" }
+    { id: "pipelines", label: "Data pipelines", startYear: 2013, category: "technical" },
+    { id: "reporting", label: "Automated reporting", startYear: 2013, category: "application" },
+    { id: "efficiency", label: "Practical efficiency", startYear: 2013, category: "practice" }
   ],
 
   // Links between nodes: how ideas connect
@@ -196,5 +196,16 @@ const siteData = {
     github: "zach-nelson",
     location: "Bishop, California",
     county: "inyowater.org/contact-us"
-  }
+  },
+  
+  // Hub nodes: labels shown by default (rest appear on hover)
+  hubNodes: [
+    "wildlife-bio",
+    "geospatial",
+    "r-lang",
+    "data-science",
+    "grid-models",
+    "reproducible",
+    "mobile-gis"
+  ]
 };
