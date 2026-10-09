@@ -3,463 +3,1073 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zach Nelson — Geospatial Data Scientist</title>
-  <meta name="description" content="Senior Geospatial Data Scientist and Science Coordinator for the Inyo/Los Angeles Long-Term Water Agreement. Groundwater-dependent ecosystems, remote sensing, wildlife habitat ecology, and reproducible science." />
+  <title>Zach Nelson</title>
+  <meta name="description" content="Following curiosity and building practical tools for geospatial data and ecological systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --name: #f4f7f5;
-      --ink: #152018;
-      --muted: #3d4f45;
-      --sage: #6f8f6a;
-      --water: #2a6f7e;
-      --sand: #c9b896;
-      --paper: #eef2ee;
-      --line: rgba(21, 32, 24, 0.12);
+      --ink: #1a1a1a;
+      --ink-light: #4a4a4a;
+      --line: #d4d4d4;
+      --line-light: #e8e8e8;
+      --paper: #fafaf8;
+      --white: #ffffff;
+      --accent: #2a5a7a;
+      --accent-soft: #4a7a9a;
+      --voyager: #b8935f;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    
+    * { 
+      box-sizing: border-box;
       margin: 0;
-      font-family: "DM Sans", system-ui, sans-serif;
+      padding: 0;
+    }
+    
+    html { 
+      scroll-behavior: smooth;
+      background: var(--paper);
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink);
       background: var(--paper);
-      line-height: 1.55;
+      line-height: 1.6;
+      font-size: 16px;
     }
-    a { color: var(--water); }
-    .skip {
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+    
+    a:hover {
+      border-bottom-color: var(--accent);
+    }
+    
+    code, .mono {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+    }
+    
+    .serif {
+      font-family: 'Crimson Pro', Georgia, serif;
+    }
+    
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .skip-link {
       position: absolute;
       left: -9999px;
+      z-index: 999;
     }
-    .skip:focus {
-      left: 0.75rem;
-      top: 0.75rem;
-      z-index: 40;
-      background: var(--paper);
-      padding: 0.5rem 0.75rem;
+    
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      background: var(--white);
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--ink);
     }
-
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: clamp(1.5rem, 4vw, 3rem);
-      color: var(--name);
-      overflow: hidden;
+    
+    /* Header */
+    header {
+      padding: 4rem 0 3rem;
     }
-    .hero-sky {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(18, 28, 34, 0.15) 0%, rgba(18, 28, 34, 0.55) 55%, rgba(12, 20, 16, 0.88) 100%),
-        linear-gradient(115deg, #8eb4c4 0%, #b8c9a8 38%, #d4c4a0 62%, #7a8f6e 100%);
-      animation: skyShift 22s ease-in-out infinite alternate;
-    }
-    @keyframes skyShift {
-      from { filter: saturate(1) hue-rotate(0deg); }
-      to { filter: saturate(1.08) hue-rotate(-8deg); }
-    }
-    .hero-ridges {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 58%;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 520' preserveAspectRatio='none'%3E%3Cpath fill='%232a3a32' d='M0 320 L180 260 L360 300 L520 200 L700 280 L900 160 L1100 240 L1280 190 L1440 250 L1440 520 L0 520 Z'/%3E%3Cpath fill='%231e2c26' d='M0 380 L220 320 L400 360 L600 280 L820 340 L1040 260 L1240 320 L1440 290 L1440 520 L0 520 Z'/%3E%3Cpath fill='%23152018' d='M0 440 L300 400 L560 430 L800 380 L1100 420 L1440 390 L1440 520 L0 520 Z'/%3E%3C/svg%3E")
-        bottom / 100% 100% no-repeat;
-      animation: ridgeDrift 28s ease-in-out infinite alternate;
-    }
-    @keyframes ridgeDrift {
-      from { transform: translateX(0) scale(1); }
-      to { transform: translateX(-1.5%) scale(1.02); }
-    }
-    .hero-floor {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 18%;
-      background: linear-gradient(180deg, transparent, rgba(30, 50, 40, 0.5));
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 42rem;
-      animation: riseIn 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    @keyframes riseIn {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .brand {
-      font-family: Fraunces, Georgia, serif;
-      font-size: clamp(2.8rem, 8vw, 4.6rem);
+    
+    h1 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 2.5rem;
       font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 0.98;
-      margin: 0 0 0.85rem;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.35);
-    }
-    .headline {
-      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-      font-weight: 500;
-      margin: 0 0 0.65rem;
-      max-width: 34rem;
-      color: rgba(244, 247, 245, 0.95);
-    }
-    .support {
-      margin: 0 0 1.4rem;
-      max-width: 34rem;
-      color: rgba(244, 247, 245, 0.78);
-      font-size: 0.98rem;
-    }
-    .ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-    }
-    .ctas a {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.7rem 1.15rem;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.92rem;
-      transition: transform 160ms ease, background 160ms ease;
-    }
-    .ctas a:hover { transform: translateY(-1px); }
-    .cta-primary {
-      background: var(--sand);
-      color: var(--ink);
-    }
-    .cta-secondary {
-      background: transparent;
-      color: var(--name);
-      border: 1px solid rgba(244, 247, 245, 0.45);
-    }
-
-    section {
-      padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 3rem);
-      max-width: 920px;
-      margin: 0 auto;
-    }
-    section h2 {
-      font-family: Fraunces, Georgia, serif;
-      font-size: clamp(1.55rem, 3vw, 2rem);
-      font-weight: 550;
-      margin: 0 0 0.5rem;
       letter-spacing: -0.02em;
+      margin-bottom: 1rem;
     }
-    .section-lead {
-      margin: 0 0 1.5rem;
-      color: var(--muted);
-      max-width: 40rem;
+    
+    .lede {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      max-width: 36rem;
     }
-
-    .about {
-      background: #e4ebe4;
+    
+    /* Sections */
+    section {
+      margin-bottom: 4rem;
     }
-    .about p {
-      margin: 0 0 1rem;
-      max-width: 42rem;
-      color: var(--muted);
+    
+    h2 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
     }
-    .about p:last-child { margin-bottom: 0; }
-    .years {
+    
+    h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    /* Timeline viz */
+    .viz-container {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    #timeline-viz {
+      width: 100%;
+      min-height: 560px;
+      background: var(--white);
+    }
+    
+    @media (max-width: 768px) {
+      #timeline-viz {
+        min-height: 480px;
+      }
+    }
+    
+    .scrubber-controls {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line-light);
+    }
+    
+    .scrubber-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--ink-light);
+    }
+    
+    .current-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+    
+    #year-scrubber {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--line-light);
+      outline: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    #year-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    #year-scrubber::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    #year-scrubber:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    
+    .legend {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line-light);
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+    
+    .legend-items {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem 1.25rem;
-      margin: 1.5rem 0 0;
-      padding: 0;
-      list-style: none;
+      gap: 1rem;
+      margin-top: 0.5rem;
     }
-    .years li {
-      font-size: 0.9rem;
-      color: var(--ink);
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
-    .years strong {
-      display: block;
-      font-family: Fraunces, Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: var(--water);
-      line-height: 1.1;
-    }
-
-    .duties-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      border-top: 1px solid var(--line);
-    }
-    .duties-list li {
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      padding-left: 1.1rem;
-      position: relative;
-    }
-    .duties-list li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 1.25rem;
-      width: 0.4rem;
-      height: 0.4rem;
-      background: var(--sage);
+    
+    .legend-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
     }
-
-    .work-list {
+    
+    /* Fallback list */
+    .timeline-list {
       list-style: none;
-      padding: 0;
+      margin-bottom: 2rem;
+    }
+    
+    .timeline-list li {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: 0.95rem;
+    }
+    
+    .timeline-list li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: var(--accent-soft);
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    
+    .timeline-list strong {
+      display: block;
+      margin-bottom: 0.15rem;
+      color: var(--ink);
+    }
+    
+    .timeline-list .year {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin-right: 0.5rem;
+    }
+    
+    .timeline-list p {
       margin: 0;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+    }
+    
+    /* Projects */
+    .project-list {
+      list-style: none;
+    }
+    
+    .project {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--line-light);
+    }
+    
+    .project:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .project-header {
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    
+    .project-what {
+      color: var(--ink-light);
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+    
+    .project-meta {
+      margin-top: 0.75rem;
+    }
+    
+    .project-meta p {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .project-meta strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    
+    .project-tools {
+      color: var(--ink-light);
+    }
+    
+    .project-link {
+      font-size: 0.9rem;
+    }
+    
+    /* Tools section */
+    .tools-inline {
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+    
+    /* Future paths */
+    .future-list {
+      list-style: none;
+      color: var(--ink-light);
+      font-style: italic;
+    }
+    
+    .future-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    
+    .future-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-soft);
+    }
+    
+    /* Contact */
+    .contact {
+      padding: 2rem 0 3rem;
+      margin-top: 3rem;
       border-top: 1px solid var(--line);
     }
-    .work-list li {
-      display: grid;
-      grid-template-columns: minmax(7rem, 9rem) 1fr;
-      gap: 1rem;
-      padding: 1.15rem 0;
-      border-bottom: 1px solid var(--line);
+    
+    .contact p {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
     }
-    .work-list .domain {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--water);
-      font-weight: 600;
-      padding-top: 0.2rem;
+    
+    /* Footer */
+    footer {
+      padding: 2rem 0;
+      margin-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--ink-light);
     }
-    .work-list h3 {
-      font-family: Fraunces, Georgia, serif;
-      font-size: 1.15rem;
-      font-weight: 550;
-      margin: 0 0 0.3rem;
+    
+    /* SVG styles */
+    .timeline-path {
+      fill: none;
+      stroke: var(--accent-soft);
+      stroke-width: 2;
+      stroke-linecap: round;
     }
-    .work-list p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
+    
+    .future-path {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1.5;
+      stroke-dasharray: 4, 4;
+      stroke-linecap: round;
     }
-
-    .tools-block {
-      background: #e4ebe4;
+    
+    .node {
+      cursor: pointer;
     }
-    .tool-groups {
-      display: grid;
-      gap: 1.25rem;
+    
+    .node circle {
+      stroke: var(--white);
+      stroke-width: 1.5;
     }
-    @media (min-width: 700px) {
-      .tool-groups { grid-template-columns: 1fr 1fr; }
+    
+    .node.baseline circle { fill: var(--voyager); }
+    .node.science circle { fill: #6b8db8; }
+    .node.ecology circle { fill: #6b9b7b; }
+    .node.technical circle { fill: #8b7b9b; }
+    .node.modeling circle { fill: #b89b6b; }
+    .node.application circle { fill: #6b9bb8; }
+    .node.practice circle { fill: #9b8b7b; }
+    .node.social circle { fill: #b87b7b; }
+    .node.fieldwork circle { fill: #7b9b9b; }
+    
+    .node.highlighted circle {
+      stroke-width: 2.5;
+      stroke: var(--ink);
     }
-    .tool-groups h3 {
-      font-family: Fraunces, Georgia, serif;
-      font-size: 1.1rem;
-      margin: 0 0 0.35rem;
-      font-weight: 550;
+    
+    .node.dimmed circle {
+      opacity: 0.15;
     }
-    .tool-groups p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
+    
+    .node text {
+      font-size: 11px;
+      fill: var(--ink);
+      pointer-events: none;
+      user-select: none;
+      font-family: 'Inter', sans-serif;
+      opacity: 0;
+      transition: opacity 0.2s ease;
     }
-
-    .pubs ul {
-      margin: 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
+    
+    .node.hub text {
+      opacity: 0.7;
     }
-    .pubs li { margin: 0 0 0.75rem; }
-    .pubs li:last-child { margin-bottom: 0; }
-
-    .contact {
-      background: var(--ink);
-      color: var(--name);
-      max-width: none;
-      padding-left: clamp(1.25rem, 4vw, 3rem);
-      padding-right: clamp(1.25rem, 4vw, 3rem);
+    
+    .node:hover text,
+    .node:focus text,
+    .node.highlighted text {
+      opacity: 1;
     }
-    .contact-inner { max-width: 920px; margin: 0 auto; }
-    .contact h2 { color: var(--name); }
-    .contact .section-lead { color: rgba(244,247,245,0.65); }
-    .contact a { color: var(--sand); }
-    .contact p { margin: 0 0 0.5rem; }
-    .contact p:last-child { margin: 0; }
-
-    footer.site {
-      padding: 1.25rem clamp(1.25rem, 4vw, 3rem) 2rem;
-      max-width: 920px;
-      margin: 0 auto;
-      font-size: 0.82rem;
-      color: var(--muted);
+    
+    .link {
+      stroke: var(--line);
+      stroke-width: 1;
+      stroke-opacity: 0.3;
     }
-
-    @media (max-width: 560px) {
-      .work-list li { grid-template-columns: 1fr; gap: 0.35rem; }
+    
+    .link.highlighted {
+      stroke: var(--accent);
+      stroke-opacity: 0.6;
+      stroke-width: 1.5;
     }
-
+    
+    .link.dimmed {
+      stroke-opacity: 0.08;
+    }
+    
+    .year-marker {
+      font-size: 11px;
+      fill: var(--ink-light);
+      font-weight: 400;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 3rem 0 2rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .viz-container {
+        padding: 1.5rem;
+      }
+      
+      #timeline-viz {
+        min-height: 480px;
+      }
+      
+      .legend-items {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+    
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .hero-sky, .hero-ridges, .hero-content { animation: none; }
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+      
+      html {
+        scroll-behavior: auto;
+      }
+    }
+    
+    /* Print */
+    @media print {
+      .scrubber-controls,
+      .skip-link {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-  <a class="skip" href="#about">Skip to content</a>
-
-  <header class="hero">
-    <div class="hero-sky" aria-hidden="true"></div>
-    <div class="hero-ridges" aria-hidden="true"></div>
-    <div class="hero-floor" aria-hidden="true"></div>
-    <div class="hero-content">
-      <h1 class="brand">Zach Nelson</h1>
-      <p class="headline">Geospatial science for groundwater-dependent ecosystems.</p>
-      <p class="support">
-        Senior Geospatial Data Scientist and Science Coordinator for the Long-Term Water Agreement
-        between Inyo County and the City of Los Angeles.
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
+  <div class="container">
+    <header>
+      <h1>Zach Nelson</h1>
+      <p class="lede">
+        Following curiosity and building practical tools for geospatial data and ecological systems.
       </p>
-      <div class="ctas">
-        <a class="cta-primary" href="#role">Role &amp; duties</a>
-        <a class="cta-secondary" href="#contact">Contact</a>
-      </div>
-    </div>
-  </header>
-
-  <section class="about" id="about">
-    <h2>About</h2>
-    <p>
-      I work primarily as a Senior Geospatial Data Scientist and Science Coordinator responsible for
-      overseeing science relating to the Long-Term Water Agreement between Inyo County and the City of Los Angeles.
-    </p>
-    <p>
-      I’m a GIS expert, remote sensing specialist, small unmanned aerial system pilot in command, and
-      wildlife habitat ecologist, experienced in statistical, grid-based, and agent-based modeling.
-    </p>
-    <p>
-      I have a special interest in literate and functional programming, reproducible and open science,
-      automated reporting, data pipelining (<code>targets</code>), and application development
-      (R Shiny and ArcGIS Online mapping applications).
-    </p>
-    <ul class="years" aria-label="Domain experience">
-      <li><strong>14 yrs</strong> Groundwater-dependent ecosystems</li>
-      <li><strong>24 yrs</strong> Avian habitat ecology</li>
-      <li><strong>22 yrs</strong> Remote sensing &amp; mapping</li>
-    </ul>
-  </section>
-
-  <section id="role">
-    <h2>Role &amp; duties</h2>
-    <p class="section-lead">
-      Senior Scientist, Inyo County Water Department — research, monitoring, geospatial systems,
-      staff supervision, and representation before governing bodies.
-    </p>
-    <ul class="duties-list">
-      <li>Direct research and monitoring related to riparian and groundwater-dependent ecosystems, wildlife ecology, geospatial applications, and remote sensing</li>
-      <li>Develop and lead interdisciplinary research projects that improve monitoring and management to protect or enhance the environment</li>
-      <li>Coordinate with senior scientific and management staff to determine and implement Owens Valley management goals and strategies</li>
-      <li>Collect and analyze field and laboratory data; prepare and deliver written and oral technical reports</li>
-      <li>Supervise and train department field staff; conduct annual performance evaluations</li>
-      <li>Prepare staffing and budgets for activities and studies; assist in preparation and management of departmental budgets</li>
-      <li>Participate in department program development; obtain funding; manage grants and contracts related to monitoring and research</li>
-      <li>Develop and manage departmental work plans and grants</li>
-      <li>Represent the department before the Board of Supervisors, the Water Commission, the Standing Committee, the Technical Group, other governmental bodies, private organizations, and the public</li>
-    </ul>
-  </section>
-
-  <section id="work">
-    <h2>Selected work</h2>
-    <p class="section-lead">Where monitoring, models, and management meet.</p>
-    <ul class="work-list">
-      <li>
-        <span class="domain">GDE / LTWA</span>
-        <div>
-          <h3>Science coordination for the Water Agreement</h3>
-          <p>Direct research and monitoring of riparian and groundwater-dependent systems; advise legal counsel and elected officials on ecological change associated with groundwater extraction.</p>
+    </header>
+    
+    <main id="main">
+      <section>
+        <h2>The path curiosity takes</h2>
+        <div class="viz-container">
+          <svg id="timeline-viz" role="img" aria-label="Interactive timeline and knowledge graph from 1977 to present"></svg>
+          
+          <div class="scrubber-controls" role="region" aria-label="Time controls">
+            <div class="scrubber-label">
+              <span>Explore the timeline</span>
+              <span class="current-year" id="current-year-display" aria-live="polite">2026</span>
+            </div>
+            <input 
+              type="range" 
+              id="year-scrubber" 
+              min="1977" 
+              max="2026" 
+              value="2026" 
+              step="1"
+              aria-label="Year slider"
+            />
+          </div>
+          
+          <div class="legend">
+            <div class="legend-items">
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #6b8db8;"></span>
+                <span>Science</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #6b9b7b;"></span>
+                <span>Ecology</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #8b7b9b;"></span>
+                <span>Technical</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #b89b6b;"></span>
+                <span>Modeling</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #6b9bb8;"></span>
+                <span>Application</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #9b8b7b;"></span>
+                <span>Practice</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #b87b7b;"></span>
+                <span>Social</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #7b9b9b;"></span>
+                <span>Field work</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </li>
-      <li>
-        <span class="domain">Geospatial</span>
-        <div>
-          <h3>Data models &amp; mapping applications</h3>
-          <p>GIS archives for ecological and hydrological data; wildlife habitat modeling, vegetation response to disturbance, change detection, and environmental compliance tooling across ArcGIS Enterprise and AGOL.</p>
-        </div>
-      </li>
-      <li>
-        <span class="domain">Remote sensing</span>
-        <div>
-          <h3>UAV, photogrammetry &amp; Earth Engine</h3>
-          <p>Small UAS PIC workflows, optical change detection, and reproducible pipelines for valley-scale observation.</p>
-        </div>
-      </li>
-      <li>
-        <span class="domain">Open science</span>
-        <div>
-          <h3>Literate programming &amp; automated reporting</h3>
-          <p>targets pipelines, Quarto / R Markdown reporting, R Shiny and AGOL apps that keep methods auditable for decision makers.</p>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <section class="tools-block" id="tools">
-    <h2>Tools &amp; methods</h2>
-    <p class="section-lead">Day-to-day stack for analysis, field data, and decision support.</p>
-    <div class="tool-groups">
-      <div>
-        <h3>Geospatial &amp; remote sensing</h3>
-        <p>ArcGIS Pro, Field Maps, ArcGIS Online / Enterprise, Earth Engine (Python API), UAV / photogrammetry, database design and administration</p>
+        
+        <!-- Fallback timeline list -->
+        <ul class="timeline-list" aria-label="Timeline of interests">
+          <li>
+            <strong><span class="year">1977</span>Voyager launches</strong>
+          </li>
+          <li>
+            <strong><span class="year">1994</span>Physics & calculus</strong>
+            <p>Community college courses while in high school</p>
+          </li>
+          <li>
+            <strong><span class="year">1996</span>Biochemistry</strong>
+            <p>Started undergraduate work</p>
+          </li>
+          <li>
+            <strong><span class="year">2000</span>Wildlife biology</strong>
+            <p>Degree completed; field work begins</p>
+          </li>
+          <li>
+            <strong><span class="year">2000–2001</span>Rats, mongoose, and birds, Hawaii</strong>
+          </li>
+          <li>
+            <strong><span class="year">2001</span>Birds, Mexico</strong>
+          </li>
+          <li>
+            <strong><span class="year">2001</span>Birds, San Clemente Island</strong>
+          </li>
+          <li>
+            <strong><span class="year">2001</span>Geospatial</strong>
+            <p>GIS and spatial analysis</p>
+          </li>
+          <li>
+            <strong><span class="year">2002</span>Birds, Texas</strong>
+          </li>
+          <li>
+            <strong><span class="year">2002–fall 2003</span>Island fox, Santa Cruz Island</strong>
+          </li>
+          <li>
+            <strong><span class="year">2002–present</span>Mobile GIS</strong>
+            <p>Constant theme from 2002 to present</p>
+          </li>
+          <li>
+            <strong><span class="year">2002</span>Remote sensing & mapping</strong>
+            <p>Wildlife–habitat relationships</p>
+          </li>
+          <li>
+            <strong><span class="year">Spring 2004</span>Island fox, Santa Cruz Island (return)</strong>
+          </li>
+          <li>
+            <strong><span class="year">2004–2006</span>Snowy plover, Arcata, CA</strong>
+          </li>
+          <li>
+            <strong><span class="year">2004</span>Python & R</strong>
+            <p>GIS scripting; statistics</p>
+          </li>
+          <li>
+            <strong><span class="year">~2006–2007</span>Birds, South Carolina</strong>
+          </li>
+          <li>
+            <strong><span class="year">~2006–2007</span>Birds, Idaho</strong>
+            <p>Through summer 2007</p>
+          </li>
+          <li>
+            <strong><span class="year">2007–2012</span>Sagebrush fire research</strong>
+          </li>
+          <li>
+            <strong><span class="year">2008</span>Modeling</strong>
+            <p>Grid-based and simulation modeling</p>
+          </li>
+          <li>
+            <strong><span class="year">2008</span>Economics & social systems</strong>
+            <p>Macroeconomics, sovereign currency systems, economic models and policy, history, and sociology</p>
+          </li>
+          <li>
+            <strong><span class="year">2012</span>Data science & decision support</strong>
+            <p>R tidyverse (early adopter); decision support tools</p>
+          </li>
+          <li>
+            <strong><span class="year">2012</span>Learning & child development</strong>
+            <p>Learning processes and child development</p>
+          </li>
+          <li>
+            <strong><span class="year">2013–present</span>Scientist, Bishop, CA</strong>
+          </li>
+          <li>
+            <strong><span class="year">2013</span>Reproducible research</strong>
+            <p>Sweave and LaTeX-style literate documents, then Markdown, then R Markdown. Grew from data compliance burden—automated methods to get unburied</p>
+          </li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>Things I've built</h2>
+        <ul class="project-list">
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">flooded-acreage</h3>
+            </div>
+            <p class="project-what">
+              Sentinel-2 satellite threshold analysis for flood mapping
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Valley-scale flood monitoring needed fast, repeatable observations to track inundated acreage by management unit</p>
+              <p><strong>What changed:</strong> Replaced manual field surveys with automated NIR threshold analysis, generating unit-by-unit reports and maps from satellite imagery</p>
+              <p class="project-tools"><strong>Tools:</strong> Sentinel-2, Earth Engine, NIR band thresholding</p>
+              <p class="project-link"><a href="https://github.com/zach-nelson/flooded-acreage">github.com/zach-nelson/flooded-acreage</a></p>
+            </div>
+          </li>
+          
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">pumping-management</h3>
+            </div>
+            <p class="project-what">
+              Soil-plant water balance and groundwater pumping models
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Groundwater pumping decisions needed to balance extraction with ecosystem impacts</p>
+              <p><strong>Tools:</strong> Hydrological modeling, soil-plant water dynamics, groundwater extraction analysis</p>
+              <p class="project-link"><a href="https://github.com/zach-nelson/pumping-management">github.com/zach-nelson/pumping-management</a></p>
+            </div>
+          </li>
+          
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">Automated reporting pipelines</h3>
+            </div>
+            <p class="project-what">
+              Reproducible analysis and report generation workflows
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Data compliance reporting consumed weeks; manual copy-paste introduced errors and made methods opaque to reviewers</p>
+              <p><strong>What changed:</strong> Automated data ingestion through final report delivery; methods became auditable, updates became trivial</p>
+              <p class="project-tools"><strong>Tools:</strong> R, targets, Quarto, R Markdown, functional programming patterns</p>
+            </div>
+          </li>
+          
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">Geospatial decision support applications</h3>
+            </div>
+            <p class="project-what">
+              Interactive mapping and data exploration tools
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Field staff and decision makers needed immediate access to monitoring data and habitat models without GIS expertise</p>
+              <p><strong>What changed:</strong> Browser-based tools let stakeholders query spatial data, compare scenarios, and export results without technical staff as intermediaries</p>
+              <p class="project-tools"><strong>Tools:</strong> R Shiny, ArcGIS Online, ArcGIS Enterprise, Python, web mapping APIs</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>Tools I reach for</h2>
+        <p class="tools-inline">
+          R, Python, SQL, targets, ArcGIS Pro, ArcGIS Online, Earth Engine, Git, Quarto, R Markdown, R Shiny, field mapping tools, UAV photogrammetry, statistical modeling, grid-based and agent-based simulation
+        </p>
+      </section>
+      
+      <section>
+        <h2>Open threads</h2>
+        <ul class="future-list">
+          <li>Faster tool-building with AI assistance</li>
+          <li>More simulation and spatial modeling</li>
+          <li>Better decision support systems</li>
+        </ul>
+      </section>
+      
+      <div class="contact">
+        <h2>Contact</h2>
+        <p>
+          <a href="mailto:zjnelson2010@gmail.com">zjnelson2010@gmail.com</a>
+        </p>
+        <p>
+          <a href="https://github.com/zach-nelson">github.com/zach-nelson</a>
+        </p>
+        <p>
+          County role: <a href="https://inyowater.org/contact-us/">inyowater.org/contact-us</a>
+        </p>
       </div>
-      <div>
-        <h3>Analysis &amp; pipelines</h3>
-        <p>R (RStudio), Python (VS Code), SQL, <code>targets</code>, statistical and numerical modeling, grid-based and agent-based models</p>
-      </div>
-      <div>
-        <h3>Applications &amp; reporting</h3>
-        <p>R Shiny, AGOL mapping applications, automated reporting, literate / functional programming, GitHub</p>
-      </div>
-      <div>
-        <h3>Science domains</h3>
-        <p>Groundwater-dependent ecosystems, avian habitat ecology, vegetation studies, science-based decision support for local government</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="pubs" id="publications">
-    <h2>Selected publications</h2>
-    <p class="section-lead">Sagebrush fire ecology and spatial simulation (lead author).</p>
-    <ul>
-      <li>Nelson, Z. J., Weisberg, P. J., Kitchen, S. G. 2013. Influence of climate and environment on post-fire recovery of mountain big sagebrush. <em>International Journal of Wildland Fire</em> 23(1): 131–142.</li>
-      <li>Nelson, Z. J., Weisberg, P. J., Kitchen, S. G. 2008. Post-fire Recovery of Mountain Big Sagebrush Communities in Utah and Nevada. <em>SageSTEP News</em> 9: 4–7.</li>
-      <li>Additional EPSCoR and conference presentations on multi-scale vegetation response, fire regime interactions, and individual-based zone-of-influence models (2007–2013).</li>
-    </ul>
-  </section>
-
-  <section id="education">
-    <h2>Education &amp; training</h2>
-    <p class="section-lead" style="margin-bottom:0.75rem">
-      <strong style="color:var(--ink)">M.Sc., Wildlife — Natural Resources Management</strong>, Cal Poly Humboldt (2007) · GIS, wildlife management, multi-model inference<br />
-      <strong style="color:var(--ink)">B.S., Biochemistry</strong>, Western Washington University (2000)
-    </p>
-    <p style="margin:0;color:var(--muted)">Groundwater Flow and Transport Modeling with GMS (January 2023)</p>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <h2>Contact</h2>
-      <p class="section-lead">
-        Bishop, California. County role listed at
-        <a href="https://inyowater.org/contact-us/">inyowater.org</a>.
-      </p>
-      <p><a href="mailto:zjnelson2010@gmail.com">zjnelson2010@gmail.com</a></p>
-      <p><a href="https://github.com/zach-nelson">github.com/zach-nelson</a></p>
-    </div>
-  </section>
-
-  <footer class="site">
-    © Zach Nelson · Open source on
-    <a href="https://github.com/zach-nelson/zach-nelson.github.io">GitHub</a>
-  </footer>
+    </main>
+    
+    <footer>
+      <p>© Zach Nelson · <a href="https://github.com/zach-nelson/zach-nelson.github.io">Open source on GitHub</a></p>
+    </footer>
+  </div>
+  
+  <!-- D3.js for force-directed graph -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  
+  <!-- Site data -->
+  <script src="data.js"></script>
+  
+  <!-- Visualization script -->
+  <script>
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // SVG setup
+    const svg = d3.select("#timeline-viz");
+    const container = document.querySelector("#timeline-viz");
+    const width = container.clientWidth;
+    const height = window.innerWidth > 768 ? 560 : 480;
+    
+    svg.attr("viewBox", `0 0 ${width} ${height}`);
+    
+    // Margins and layout
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    const graphWidth = width - margin.left - margin.right;
+    const graphHeight = height - margin.top - margin.bottom;
+    
+    const g = svg.append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+    
+    // Create meandering path for timeline
+    const pathY = graphHeight * 0.75;
+    const pathData = [
+      { year: 1977, x: 0 },
+      { year: 1985, x: graphWidth * 0.15 },
+      { year: 1995, x: graphWidth * 0.30 },
+      { year: 2005, x: graphWidth * 0.55 },
+      { year: 2015, x: graphWidth * 0.78 },
+      { year: 2026, x: graphWidth }
+    ];
+    
+    // Generate smooth curve for main path
+    const pathCurve = d3.line()
+      .x(d => d.x)
+      .y(d => pathY + Math.sin(d.x / graphWidth * Math.PI * 2.5) * 30)
+      .curve(d3.curveCatmullRom);
+    
+    // Draw main timeline path
+    g.append("path")
+      .datum(pathData)
+      .attr("class", "timeline-path")
+      .attr("d", pathCurve);
+    
+    // Future paths (dashed extensions)
+    const futurePaths = [
+      { angle: -12, length: 80 },
+      { angle: 0, length: 100 },
+      { angle: 12, length: 85 }
+    ];
+    
+    const endX = graphWidth;
+    const endY = pathY + Math.sin(endX / graphWidth * Math.PI * 2.5) * 30;
+    
+    futurePaths.forEach(path => {
+      const radians = path.angle * Math.PI / 180;
+      const futureEndX = endX + path.length * Math.cos(radians);
+      const futureEndY = endY + path.length * Math.sin(radians);
+      
+      g.append("line")
+        .attr("class", "future-path")
+        .attr("x1", endX)
+        .attr("y1", endY)
+        .attr("x2", futureEndX)
+        .attr("y2", futureEndY);
+    });
+    
+    // Year markers on path
+    const yearMarkers = [1977, 1990, 2000, 2010, 2020, 2026];
+    yearMarkers.forEach(year => {
+      const t = (year - 1977) / (2026 - 1977);
+      const x = t * graphWidth;
+      const y = pathY + Math.sin(x / graphWidth * Math.PI * 2.5) * 30;
+      
+      g.append("text")
+        .attr("class", "year-marker")
+        .attr("x", x)
+        .attr("y", y + 22)
+        .attr("text-anchor", "middle")
+        .text(year);
+    });
+    
+    // Force-directed graph
+    const currentYear = 2026;
+    let displayYear = currentYear;
+    
+    function getVisibleNodes(year) {
+      return siteData.nodes.filter(n => n.startYear <= year);
+    }
+    
+    function getVisibleLinks(year) {
+      const visibleNodeIds = new Set(getVisibleNodes(year).map(n => n.id));
+      return siteData.links.filter(l => 
+        visibleNodeIds.has(l.source.id || l.source) && 
+        visibleNodeIds.has(l.target.id || l.target)
+      );
+    }
+    
+    // Time scale for x-anchoring (maps year to x position on path)
+    const timeScale = d3.scaleLinear()
+      .domain([1977, 2026])
+      .range([0, graphWidth]);
+    
+    // Y-band targets for different categories
+    const yBands = {
+      baseline: pathY,
+      fieldwork: pathY - 80,
+      ecology: pathY - 60,
+      science: pathY - 40,
+      technical: pathY + 60,
+      practice: pathY + 80,
+      modeling: pathY + 40,
+      application: pathY + 100,
+      social: pathY - 100
+    };
+    
+    // Create force simulation
+    let simulation = d3.forceSimulation()
+      .force("link", d3.forceLink().id(d => d.id).distance(40))
+      .force("charge", d3.forceManyBody().strength(-120))
+      .force("collision", d3.forceCollide().radius(d => {
+        // Calculate label width for collision
+        const isHub = siteData.hubNodes && siteData.hubNodes.includes(d.id);
+        return isHub ? 35 : 12;
+      }))
+      .force("x", d3.forceX().x(d => {
+        // Anchor each node to its year on the timeline
+        return timeScale(d.startYear);
+      }).strength(0.3))
+      .force("y", d3.forceY().y(d => {
+        // Push nodes into category bands
+        return yBands[d.category] || pathY;
+      }).strength(0.2))
+      .force("bounds", () => {
+        // Keep nodes inside canvas bounds
+        simulation.nodes().forEach(node => {
+          node.x = Math.max(10, Math.min(graphWidth - 10, node.x));
+          node.y = Math.max(10, Math.min(graphHeight - 10, node.y));
+        });
+      });
+    
+    if (prefersReducedMotion) {
+      simulation.alpha(0);
+    }
+    
+    // Create link and node groups
+    const linkGroup = g.append("g").attr("class", "links");
+    const nodeGroup = g.append("g").attr("class", "nodes");
+    
+    let link, node;
+    
+    function updateVisualization(year) {
+      const nodes = getVisibleNodes(year);
+      const links = getVisibleLinks(year);
+      
+      // Update links
+      link = linkGroup.selectAll(".link")
+        .data(links, d => `${d.source.id || d.source}-${d.target.id || d.target}`);
+      
+      link.exit().remove();
+      
+      link = link.enter()
+        .append("line")
+        .attr("class", "link")
+        .merge(link);
+      
+      // Update nodes
+      node = nodeGroup.selectAll(".node")
+        .data(nodes, d => d.id);
+      
+      node.exit().remove();
+      
+      const nodeEnter = node.enter()
+        .append("g")
+        .attr("class", d => {
+          const isHub = siteData.hubNodes && siteData.hubNodes.includes(d.id);
+          return `node ${d.category}${isHub ? ' hub' : ''}`;
+        })
+        .call(d3.drag()
+          .on("start", dragStarted)
+          .on("drag", dragged)
+          .on("end", dragEnded));
+      
+      nodeEnter.append("circle")
+        .attr("r", 6);
+      
+      nodeEnter.append("text")
+        .attr("dx", 9)
+        .attr("dy", 3)
+        .text(d => d.label);
+      
+      node = nodeEnter.merge(node);
+      
+      // Hover interactions
+      node.on("mouseenter", function(event, d) {
+        highlightConnections(d);
+      })
+      .on("mouseleave", function(event, d) {
+        clearHighlight();
+      })
+      .on("focus", function(event, d) {
+        highlightConnections(d);
+      })
+      .on("blur", function(event, d) {
+        clearHighlight();
+      });
+      
+      // Make nodes keyboard accessible
+      node.attr("tabindex", 0)
+        .attr("role", "button")
+        .attr("aria-label", d => `${d.label}, ${d.startYear}`);
+      
+      // Update simulation
+      simulation.nodes(nodes);
+      simulation.force("link").links(links);
+      simulation.alpha(prefersReducedMotion ? 0 : 0.3).restart();
+    }
+    
+    function highlightConnections(d) {
+      const connectedNodes = new Set([d.id]);
+      
+      link.each(function(l) {
+        if (l.source.id === d.id) connectedNodes.add(l.target.id);
+        if (l.target.id === d.id) connectedNodes.add(l.source.id);
+      });
+      
+      node.classed("highlighted", n => n.id === d.id)
+        .classed("dimmed", n => !connectedNodes.has(n.id));
+      
+      link.classed("highlighted", l => l.source.id === d.id || l.target.id === d.id)
+        .classed("dimmed", l => l.source.id !== d.id && l.target.id !== d.id);
+    }
+    
+    function clearHighlight() {
+      node.classed("highlighted", false).classed("dimmed", false);
+      link.classed("highlighted", false).classed("dimmed", false);
+    }
+    
+    function ticked() {
+      // Clamp positions to bounds
+      simulation.nodes().forEach(d => {
+        d.x = Math.max(15, Math.min(graphWidth - 15, d.x));
+        d.y = Math.max(15, Math.min(graphHeight - 15, d.y));
+      });
+      
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+      
+      node
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+    }
+    
+    simulation.on("tick", ticked);
+    
+    function dragStarted(event, d) {
+      if (!event.active && !prefersReducedMotion) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+    
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+    
+    function dragEnded(event, d) {
+      if (!event.active && !prefersReducedMotion) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+    
+    // Year scrubber
+    const scrubber = document.getElementById("year-scrubber");
+    const yearDisplay = document.getElementById("current-year-display");
+    
+    scrubber.addEventListener("input", function(e) {
+      displayYear = parseInt(e.target.value);
+      yearDisplay.textContent = displayYear;
+      updateVisualization(displayYear);
+    });
+    
+    // Keyboard controls for scrubber
+    scrubber.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        setTimeout(() => {
+          displayYear = parseInt(e.target.value);
+          yearDisplay.textContent = displayYear;
+          updateVisualization(displayYear);
+        }, 0);
+      }
+    });
+    
+    // Initialize
+    updateVisualization(displayYear);
+    
+    // Responsive resize
+    let resizeTimeout;
+    window.addEventListener("resize", function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function() {
+        location.reload();
+      }, 500);
+    });
+  </script>
 </body>
 </html>
