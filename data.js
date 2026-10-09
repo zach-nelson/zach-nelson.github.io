@@ -15,7 +15,7 @@ const siteData = {
     { year: 2008, label: "Economics & social systems", description: "Macroeconomics, sovereign currency systems, economic models and policy, history, and sociology" },
     { year: 2012, label: "Data science & decision support", description: "R tidyverse (early adopter); decision support tools" },
     { year: 2012, label: "Learning & child development", description: "Learning processes and child development" },
-    { year: 2015, label: "Reproducible research", description: "Grew from data compliance burden—automated methods to get unburied" }
+    { year: 2013, label: "Reproducible research", description: "Sweave and LaTeX-style literate documents, then Markdown, then R Markdown. Grew from data compliance burden—automated methods to get unburied" }
   ],
 
   // Nodes for the knowledge graph: ideas and their connections
@@ -47,8 +47,11 @@ const siteData = {
     { id: "decision-support", label: "Decision support", startYear: 2012, category: "application" },
     { id: "learning-dev", label: "Learning & development", startYear: 2012, category: "science" },
     { id: "child-development", label: "Child development", startYear: 2012, category: "science" },
-    { id: "reproducible", label: "Reproducible research", startYear: 2015, category: "practice" },
-    { id: "automation", label: "Automation", startYear: 2015, category: "practice" },
+    { id: "sweave-latex", label: "Sweave / LaTeX", startYear: 2013, category: "practice" },
+    { id: "markdown", label: "Markdown", startYear: 2013, category: "practice" },
+    { id: "r-markdown", label: "R Markdown", startYear: 2013, category: "practice" },
+    { id: "reproducible", label: "Reproducible research", startYear: 2013, category: "practice" },
+    { id: "automation", label: "Automation", startYear: 2013, category: "practice" },
     { id: "pipelines", label: "Data pipelines", startYear: 2015, category: "technical" },
     { id: "reporting", label: "Automated reporting", startYear: 2015, category: "application" },
     { id: "efficiency", label: "Practical efficiency", startYear: 2015, category: "practice" }
@@ -81,6 +84,14 @@ const siteData = {
     { source: "mapping", target: "decision-support" },
     { source: "decision-support", target: "reproducible" },
     { source: "data-science", target: "reproducible" },
+    
+    // Literate programming lineage
+    { source: "r-lang", target: "sweave-latex" },
+    { source: "sweave-latex", target: "markdown" },
+    { source: "markdown", target: "r-markdown" },
+    { source: "r-markdown", target: "reproducible" },
+    { source: "tidyverse", target: "r-markdown" },
+    
     { source: "reproducible", target: "automation" },
     { source: "automation", target: "pipelines" },
     { source: "pipelines", target: "reporting" },
