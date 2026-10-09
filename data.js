@@ -13,7 +13,8 @@ const siteData = {
     { year: 2001, label: "Birds, San Clemente Island", description: "" },
     { year: 2001, label: "Geospatial", description: "GIS and spatial analysis" },
     { year: 2002, label: "Birds, Texas", description: "" },
-    { year: 2002, label: "Island fox, Santa Cruz Island", description: "" },
+    { year: 2002, label: "Island fox, Santa Cruz Island", description: "2002 to fall 2003" },
+    { year: 2004, label: "Island fox, Santa Cruz Island (return)", description: "Spring 2004" },
     { year: 2002, label: "Mobile GIS", description: "Constant theme from 2002 to present" },
     { year: 2002, label: "Remote sensing & mapping", description: "Wildlife–habitat relationships" },
     { year: 2004, label: "Snowy plover, Arcata, CA", description: "" },
@@ -43,7 +44,8 @@ const siteData = {
     { id: "sanclemente-field", label: "Birds (San Clemente)", startYear: 2001, category: "fieldwork" },
     { id: "geospatial", label: "Geospatial analysis", startYear: 2001, category: "technical" },
     { id: "texas-field", label: "Birds (Texas)", startYear: 2002, category: "fieldwork" },
-    { id: "islandfox-field", label: "Island fox (Santa Cruz)", startYear: 2002, category: "fieldwork" },
+    { id: "islandfox-field-1", label: "Island fox (Santa Cruz)", startYear: 2002, category: "fieldwork" },
+    { id: "islandfox-field-2", label: "Island fox return (Santa Cruz)", startYear: 2004, category: "fieldwork" },
     { id: "mobile-gis", label: "Mobile GIS", startYear: 2002, category: "technical" },
     { id: "remote-sensing", label: "Remote sensing", startYear: 2002, category: "technical" },
     { id: "mapping", label: "Mapping", startYear: 2002, category: "technical" },
@@ -96,8 +98,9 @@ const siteData = {
     { source: "hawaii-field", target: "mexico-field" },
     { source: "mexico-field", target: "sanclemente-field" },
     { source: "sanclemente-field", target: "texas-field" },
-    { source: "texas-field", target: "islandfox-field" },
-    { source: "islandfox-field", target: "plover-field" },
+    { source: "texas-field", target: "islandfox-field-1" },
+    // Gap in field work (fall 2003 - spring 2004)
+    { source: "islandfox-field-2", target: "plover-field" },
     { source: "plover-field", target: "sc-field" },
     { source: "sc-field", target: "idaho-field" },
     { source: "idaho-field", target: "sagebrush-field" },
@@ -105,7 +108,8 @@ const siteData = {
     
     // Field work connections to other domains
     { source: "wildlife-bio", target: "habitat" },
-    { source: "islandfox-field", target: "habitat" },
+    { source: "islandfox-field-1", target: "habitat" },
+    { source: "islandfox-field-2", target: "habitat" },
     { source: "plover-field", target: "remote-sensing" },
     { source: "sagebrush-field", target: "grid-models" },
     { source: "sagebrush-field", target: "simulation" },
@@ -114,7 +118,8 @@ const siteData = {
     
     // Mobile GIS thread (constant theme from 2002-present)
     { source: "mobile-gis", target: "texas-field" },
-    { source: "mobile-gis", target: "islandfox-field" },
+    { source: "mobile-gis", target: "islandfox-field-1" },
+    { source: "mobile-gis", target: "islandfox-field-2" },
     { source: "mobile-gis", target: "plover-field" },
     { source: "mobile-gis", target: "sc-field" },
     { source: "mobile-gis", target: "idaho-field" },
