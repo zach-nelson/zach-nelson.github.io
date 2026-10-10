@@ -1546,8 +1546,8 @@
       // Update function
       function updateTimeline() {
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollProgress = Math.max(0, Math.min(1, scrollY / Math.max(1, scrollHeight)));
+        const timelineHeight = scrollTimeline.offsetHeight;
+        const scrollProgress = Math.max(0, Math.min(1, scrollY / Math.max(1, timelineHeight)));
         
         // Map scroll to year (1977-2026)
         currentYear = Math.floor(1977 + scrollProgress * 49);
