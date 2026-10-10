@@ -618,15 +618,19 @@
     
     .current-milestone {
       position: absolute;
-      left: 35%;
-      bottom: 42%;
-      font-size: 0.85rem;
+      left: 50%;
+      bottom: 20%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
       color: var(--ink);
       font-weight: 500;
       text-align: center;
-      transform: translateX(-50%);
       white-space: nowrap;
       z-index: 14;
+      background: rgba(245, 243, 240, 0.9);
+      padding: 0.35rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
     }
     
     .scene-props {
@@ -641,12 +645,18 @@
     
     .prop {
       position: absolute;
-      opacity: 0.6;
-      transition: opacity 0.3s ease;
+      opacity: 0.5;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     
     .prop.active {
-      opacity: 1;
+      opacity: 0.85;
+      transform: scale(1.15);
+    }
+    
+    .prop svg {
+      width: 100%;
+      height: 100%;
     }
     
     .dispatch-feed {
@@ -672,48 +682,77 @@
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: 4px;
-      padding: 0.75rem;
-      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
       opacity: 0;
-      transform: translateX(20px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
     }
     
     .dispatch-card.visible {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
     }
     
-    .dispatch-card img {
-      width: 100%;
-      height: auto;
+    .dispatch-card.newest {
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .dispatch-thumbnail {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
       border-radius: 2px;
-      margin-bottom: 0.5rem;
+      object-fit: cover;
+    }
+    
+    .dispatch-content {
+      flex: 1;
+      min-width: 0;
     }
     
     .dispatch-date {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--accent);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.15rem;
     }
     
     .dispatch-card-title {
       font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      margin-bottom: 0.15rem;
       color: var(--ink);
+      line-height: 1.2;
     }
     
     .dispatch-text {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: var(--ink-light);
-      margin-bottom: 0.5rem;
-      line-height: 1.4;
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     
     .dispatch-source {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--accent-soft);
     }
     
@@ -853,81 +892,147 @@
       
       <div class="character" id="character">
         <svg class="character-stage" data-stage="baby" viewBox="0 0 60 80">
-          <circle cx="30" cy="25" r="12" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <ellipse cx="30" cy="50" rx="10" ry="18" fill="var(--ink)" />
-          <line x1="20" y1="45" x2="14" y2="55" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
-          <line x1="40" y1="45" x2="46" y2="55" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
-          <line x1="24" y1="65" x2="20" y2="75" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
-          <line x1="36" y1="65" x2="40" y2="75" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Head -->
+          <circle cx="30" cy="22" r="10" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="21" r="1.5" fill="var(--ink)" />
+          <circle cx="33" cy="21" r="1.5" fill="var(--ink)" />
+          <circle cx="30" cy="25" r="2" fill="#ffa0a0" opacity="0.6" />
+          <!-- Torso -->
+          <ellipse cx="30" cy="48" rx="9" ry="16" fill="var(--accent-soft)" />
+          <!-- Arms -->
+          <line x1="23" y1="42" x2="15" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="37" y1="42" x2="45" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="62" x2="23" y2="75" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="34" y1="62" x2="37" y2="75" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
         </svg>
         
         <svg class="character-stage" data-stage="kid" viewBox="0 0 60 100">
-          <circle cx="30" cy="20" r="10" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <rect x="22" y="30" width="16" height="35" fill="var(--accent-soft)" rx="2" />
-          <line x1="20" y1="40" x2="12" y2="55" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
-          <line x1="40" y1="40" x2="48" y2="55" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
-          <line x1="25" y1="65" x2="22" y2="90" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
-          <line x1="35" y1="65" x2="38" y2="90" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Head -->
+          <circle cx="30" cy="18" r="8.5" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.3" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.3" fill="var(--ink)" />
+          <path d="M27,20.5 Q30,21.5 33,20.5" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="23" y="26.5" width="14" height="35" fill="var(--accent-soft)" rx="2.5" />
+          <!-- Arms -->
+          <line x1="23" y1="36" x2="13" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="37" y1="36" x2="47" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="61.5" x2="23" y2="92" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="61.5" x2="37" y2="92" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
         </svg>
         
         <svg class="character-stage" data-stage="teen" viewBox="0 0 60 110">
-          <circle cx="30" cy="18" r="9" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <rect x="23" y="27" width="14" height="40" fill="var(--accent)" rx="2" />
-          <line x1="20" y1="35" x2="10" y2="52" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="40" y1="35" x2="50" y2="52" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="26" y1="67" x2="24" y2="100" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="34" y1="67" x2="36" y2="100" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
+          <!-- Head -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="23" y="26" width="14" height="39" fill="var(--accent)" rx="2.5" />
+          <!-- Arms -->
+          <line x1="23" y1="34" x2="12" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <line x1="37" y1="34" x2="48" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="65" x2="24" y2="102" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="65" x2="36" y2="102" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
         </svg>
         
         <svg class="character-stage" data-stage="student" viewBox="0 0 60 115">
-          <circle cx="30" cy="17" r="9" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <rect x="23" y="26" width="14" height="42" fill="var(--accent-soft)" rx="2" />
+          <!-- Head -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="22" y="26" width="16" height="40" fill="var(--accent-soft)" rx="3" />
+          <!-- Backpack straps -->
           <rect x="20" y="33" width="20" height="4" fill="var(--ink-light)" />
-          <line x1="19" y1="34" x2="8" y2="50" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="41" y1="34" x2="52" y2="50" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="26" y1="68" x2="24" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="34" y1="68" x2="36" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
+          <!-- Arms -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <line x1="38" y1="35" x2="50" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
         </svg>
         
         <svg class="character-stage" data-stage="biologist" viewBox="0 0 60 115">
-          <rect x="26" y="10" width="8" height="5" fill="#8b7b6b" rx="1" />
-          <circle cx="30" cy="17" r="9" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <rect x="23" y="26" width="14" height="42" fill="#7b9b7b" rx="2" />
-          <rect x="20" y="32" width="20" height="10" fill="#6b8b6b" rx="1" />
-          <line x1="19" y1="38" x2="8" y2="54" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="41" y1="38" x2="48" y2="48" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <ellipse cx="48" cy="46" rx="4" ry="5" fill="var(--ink-light)" stroke="var(--ink)" stroke-width="1.5" />
-          <ellipse cx="51" cy="44" rx="4" ry="5" fill="var(--ink-light)" stroke="var(--ink)" stroke-width="1.5" />
-          <line x1="48" y1="46" x2="51" y2="44" stroke="var(--ink)" stroke-width="1" />
-          <line x1="26" y1="68" x2="24" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" class="leg-left" />
-          <line x1="34" y1="68" x2="36" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" class="leg-right" />
+          <!-- Wide-brim hat -->
+          <ellipse cx="30" cy="12" rx="13" ry="3" fill="#8b7b6b" />
+          <rect x="24" y="10" width="12" height="6" fill="#8b7b6b" rx="1.5" />
+          <!-- Head with simple face -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso with vest -->
+          <rect x="22" y="26" width="16" height="40" fill="#7b9b7b" rx="3" />
+          <rect x="20" y="30" width="20" height="14" fill="#6b8b6b" rx="2" />
+          <circle cx="23" cy="37" r="1.5" fill="#4a5a4a" />
+          <circle cx="37" cy="37" r="1.5" fill="#4a5a4a" />
+          <!-- Arms -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <line x1="38" y1="35" x2="50" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Binoculars on strap -->
+          <path d="M25,26 Q30,28 35,26" stroke="var(--ink)" stroke-width="1.5" fill="none" />
+          <rect x="26" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <rect x="30.5" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <line x1="29.5" y1="47.5" x2="30.5" y2="47.5" stroke="var(--ink)" stroke-width="0.8" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
         </svg>
         
         <svg class="character-stage" data-stage="biologist-gps" viewBox="0 0 60 115">
-          <rect x="26" y="10" width="8" height="5" fill="#8b7b6b" rx="1" />
-          <circle cx="30" cy="17" r="9" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <rect x="23" y="26" width="14" height="42" fill="#7b9b7b" rx="2" />
-          <rect x="20" y="32" width="20" height="10" fill="#6b8b6b" rx="1" />
-          <line x1="19" y1="38" x2="10" y2="54" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="41" y1="38" x2="47" y2="48" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <rect x="45" y="46" width="10" height="14" fill="#d4d4d4" stroke="var(--ink)" stroke-width="1" rx="1.5" />
-          <rect x="46" y="47" width="8" height="8" fill="var(--accent-soft)" />
-          <circle cx="50" cy="58" r="1" fill="var(--ink)" />
-          <line x1="26" y1="68" x2="24" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" class="leg-left" />
-          <line x1="34" y1="68" x2="36" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" class="leg-right" />
+          <!-- Wide-brim hat -->
+          <ellipse cx="30" cy="12" rx="13" ry="3" fill="#8b7b6b" />
+          <rect x="24" y="10" width="12" height="6" fill="#8b7b6b" rx="1.5" />
+          <!-- Head with simple face -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso with vest -->
+          <rect x="22" y="26" width="16" height="40" fill="#7b9b7b" rx="3" />
+          <rect x="20" y="30" width="20" height="14" fill="#6b8b6b" rx="2" />
+          <circle cx="23" cy="37" r="1.5" fill="#4a5a4a" />
+          <circle cx="37" cy="37" r="1.5" fill="#4a5a4a" />
+          <!-- Left arm -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Right arm holding GPS -->
+          <line x1="38" y1="35" x2="46" y2="48" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <rect x="43" y="46" width="11" height="15" fill="#d4d4d4" stroke="var(--ink)" stroke-width="1" rx="1.5" />
+          <rect x="44.5" y="47.5" width="8" height="9" fill="#b5e5cf" stroke="var(--ink)" stroke-width="0.5" />
+          <circle cx="48.5" cy="59" r="1.5" fill="#666" />
+          <!-- Binoculars on strap -->
+          <path d="M25,26 Q30,28 35,26" stroke="var(--ink)" stroke-width="1.5" fill="none" />
+          <rect x="26" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <rect x="30.5" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <line x1="29.5" y1="47.5" x2="30.5" y2="47.5" stroke="var(--ink)" stroke-width="0.8" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
         </svg>
         
         <svg class="character-stage" data-stage="scientist" viewBox="0 0 60 115">
-          <rect x="26" y="10" width="8" height="5" fill="#8b7b6b" rx="1" />
-          <circle cx="30" cy="17" r="9" fill="var(--ink)" stroke="var(--ink-light)" stroke-width="1" />
-          <rect x="23" y="26" width="14" height="42" fill="var(--accent)" rx="2" />
-          <line x1="19" y1="36" x2="8" y2="48" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="41" y1="36" x2="48" y2="48" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" />
-          <rect x="44" y="46" width="14" height="10" fill="#555" stroke="var(--ink)" stroke-width="1" rx="1" />
-          <rect x="45" y="47" width="12" height="7" fill="#88c" />
-          <line x1="44" y1="56" x2="58" y2="56" stroke="var(--ink)" stroke-width="1" />
-          <line x1="26" y1="68" x2="24" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" class="leg-left" />
-          <line x1="34" y1="68" x2="36" y2="105" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" class="leg-right" />
+          <!-- Head with simple face (no hat for modern stage) -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="22" y="26" width="16" height="40" fill="var(--accent)" rx="3" />
+          <!-- Left arm -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Right arm holding laptop -->
+          <line x1="38" y1="35" x2="46" y2="48" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <rect x="42" y="46" width="16" height="11" fill="#555" stroke="var(--ink)" stroke-width="1" rx="1" />
+          <rect x="43" y="47" width="14" height="8" fill="#88c" stroke="var(--ink)" stroke-width="0.5" />
+          <line x1="42" y1="57" x2="58" y2="57" stroke="var(--ink)" stroke-width="1.5" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
         </svg>
       </div>
       
@@ -1582,15 +1687,19 @@
         let cardHTML = '';
         
         if (event.image) {
-          cardHTML += `<img src="${event.image}" alt="${event.title}" loading="lazy" />`;
+          cardHTML += `<img class="dispatch-thumbnail" src="${event.image}" alt="${event.title}" loading="lazy" />`;
+        } else {
+          cardHTML += `<div class="dispatch-thumbnail" style="background: var(--accent-soft);"></div>`;
         }
         
         cardHTML += `
-          <div class="dispatch-date">${event.date}</div>
-          <div class="dispatch-card-title">${event.title}</div>
-          <div class="dispatch-text">${event.text}</div>
-          <div class="dispatch-source">
-            <a href="${event.source}" target="_blank" rel="noopener">${event.credit}</a>
+          <div class="dispatch-content">
+            <div class="dispatch-date">${event.date}</div>
+            <div class="dispatch-card-title">${event.title}</div>
+            <div class="dispatch-text">${event.text}</div>
+            <div class="dispatch-source">
+              <a href="${event.source}" target="_blank" rel="noopener">${event.credit}</a>
+            </div>
           </div>
         `;
         
@@ -1661,16 +1770,37 @@
             const yPos = 60 + (Math.random() * 30);
             prop.style.left = `${xPos}%`;
             prop.style.top = `${yPos}%`;
+            prop.style.width = '36px';
+            prop.style.height = '36px';
             
             let svg = '';
             if (propType === 'bird') {
-              svg = `<svg width="30" height="24" viewBox="0 0 30 24"><path d="M15,8 Q10,6 8,10 Q6,8 4,10 L8,12 Q6,14 8,16 Q10,14 12,14 Q14,16 16,14 Q18,14 20,14 Q22,14 24,16 Q26,14 24,12 L28,10 Q26,8 24,10 Q22,6 17,8 Z" fill="var(--ink)" opacity="0.5" /></svg>`;
+              svg = `<svg width="36" height="36" viewBox="0 0 36 36">
+                <path d="M18,16 L14,12 L10,14 M18,16 L22,12 L26,14" stroke="#5a6a5a" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="18" cy="20" rx="6" ry="5" fill="#5a6a5a" />
+                <circle cx="16" cy="19" r="1" fill="#2a3a2a" />
+                <path d="M8,24 Q18,26 28,24" stroke="#5a6a5a" stroke-width="1.5" fill="none" />
+              </svg>`;
             } else if (propType === 'fox') {
-              svg = `<svg width="36" height="28" viewBox="0 0 36 28"><path d="M4,12 L8,4 L12,12 M24,12 L28,4 L32,12 M8,12 Q12,10 18,10 Q24,10 28,12 Q30,16 28,20 L24,22 L12,22 L8,20 Q6,16 8,12 Z" fill="var(--ink)" opacity="0.5" stroke="var(--ink)" stroke-width="1" /></svg>`;
+              svg = `<svg width="40" height="36" viewBox="0 0 40 36">
+                <path d="M8,16 L12,6 L16,16" stroke="#7a6a5a" stroke-width="2" fill="none" stroke-linecap="round" />
+                <path d="M24,16 L28,6 L32,16" stroke="#7a6a5a" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="20" cy="22" rx="10" ry="7" fill="#7a6a5a" />
+                <circle cx="17" cy="21" r="1.5" fill="#2a2a2a" />
+                <circle cx="23" cy="21" r="1.5" fill="#2a2a2a" />
+                <path d="M20,24 L18,28 M20,24 L22,28" stroke="#7a6a5a" stroke-width="1.5" fill="none" />
+              </svg>`;
             } else if (propType === 'island') {
-              svg = `<svg width="40" height="20" viewBox="0 0 40 20"><path d="M0,18 L5,14 L10,16 L15,12 L20,13 L25,10 L30,12 L35,14 L40,18" fill="var(--ink)" opacity="0.4" /></svg>`;
+              svg = `<svg width="40" height="28" viewBox="0 0 40 28">
+                <path d="M0,24 L6,18 L10,20 L14,16 L18,17 L22,14 L26,16 L30,18 L34,20 L40,24 Z" fill="#6a7a6a" />
+                <path d="M12,16 L16,10 L20,12 M24,14 L28,8 L32,11" stroke="#5a6a5a" stroke-width="1.5" fill="none" stroke-linecap="round" />
+              </svg>`;
             } else if (propType === 'sagebrush') {
-              svg = `<svg width="28" height="32" viewBox="0 0 28 32"><path d="M14,28 L14,20 M10,24 Q10,18 14,16 Q18,18 18,24 M8,20 Q8,14 14,10 Q20,14 20,20 M6,16 Q6,10 14,6 Q22,10 22,16" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.5" /></svg>`;
+              svg = `<svg width="32" height="36" viewBox="0 0 32 36">
+                <path d="M16,32 L16,24 M12,28 Q12,22 16,20 Q20,22 20,28" stroke="#6a7a5a" stroke-width="2" fill="none" />
+                <path d="M10,24 Q10,18 16,14 Q22,18 22,24" stroke="#6a7a5a" stroke-width="2" fill="none" />
+                <path d="M8,20 Q8,12 16,8 Q24,12 24,20" stroke="#6a7a5a" stroke-width="2" fill="none" />
+              </svg>`;
             }
             
             prop.innerHTML = svg;
@@ -1698,7 +1828,7 @@
         const voyagerY = 3 + Math.sin(voyagerProgress * Math.PI * 2) * 2;
         voyagerSprite.style.transform = `translate(${voyagerX}px, ${voyagerY}rem)`;
         
-        // Update timeline path to span viewport with meandering pattern
+        // Update timeline path with smooth curves
         const pathEl = document.getElementById('meandering-path');
         const pathSvg = document.getElementById('timeline-path');
         const vw = window.innerWidth;
@@ -1707,25 +1837,47 @@
         
         pathSvg.setAttribute('viewBox', `0 0 ${vw * 2} 200`);
         
-        let pathD = `M0,100`;
-        for (let i = 1; i <= 20; i++) {
-          const x = (i * vw * 2) / 20;
+        // Generate smooth curved path using quadratic bezier curves
+        const points = [];
+        for (let i = 0; i <= 24; i++) {
+          const x = (i * vw * 2) / 24;
           const y = 100 + Math.sin(phase + (i * Math.PI / 3)) * amplitude * (0.8 + Math.sin(i * 0.7) * 0.2);
-          pathD += ` L${x},${y}`;
+          points.push({ x, y });
         }
+        
+        let pathD = `M${points[0].x},${points[0].y}`;
+        for (let i = 1; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          pathD += ` Q${points[i].x},${points[i].y} ${xc},${yc}`;
+        }
+        pathD += ` T${points[points.length - 1].x},${points[points.length - 1].y}`;
         pathEl.setAttribute('d', pathD);
         
-        // Show dispatch cards
-        const cards = dispatchCards.querySelectorAll('.dispatch-card');
+        // Show dispatch cards (newest first)
+        const cards = Array.from(dispatchCards.querySelectorAll('.dispatch-card'));
+        let newestCard = null;
+        
         cards.forEach(card => {
           const cardYear = parseInt(card.getAttribute('data-year'));
           const cardIndex = parseInt(card.getAttribute('data-index'));
           
           if (currentYear >= cardYear && !shownCards.has(cardIndex)) {
+            // Prepend card to top of feed
+            if (dispatchCards.firstChild) {
+              dispatchCards.insertBefore(card, dispatchCards.firstChild);
+            }
+            
             setTimeout(() => {
-              card.classList.add('visible');
+              card.classList.add('visible', 'newest');
               shownCards.add(cardIndex);
-            }, 100 * (cardIndex % 3));
+              newestCard = card;
+              
+              // Remove 'newest' class after animation
+              setTimeout(() => {
+                card.classList.remove('newest');
+              }, 500);
+            }, 50);
           }
         });
         
