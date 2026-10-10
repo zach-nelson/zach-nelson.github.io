@@ -495,14 +495,15 @@
     /* Scroll Timeline Animation */
     .scroll-timeline {
       position: relative;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
       background: linear-gradient(180deg, #f5f3f0 0%, var(--paper-warm) 50%, #f5f3f0 100%);
       border-bottom: 2px solid var(--line);
     }
     
     .scroll-spacer {
       height: 4900px;
+      width: 100%;
+      pointer-events: none;
     }
     
     .timeline-scene {
@@ -792,8 +793,6 @@
   
   <!-- Scroll Timeline Animation -->
   <div class="scroll-timeline" id="scroll-timeline" aria-label="Interactive timeline 1977-2026">
-    <div class="scroll-spacer"></div>
-    
     <div class="timeline-scene">
       <div class="year-counter" id="year-counter" aria-live="polite">1977</div>
       
@@ -891,6 +890,8 @@
       <h2 class="dispatch-title">Voyager Dispatches</h2>
       <div class="dispatch-cards" id="dispatch-cards"></div>
     </aside>
+    
+    <div class="scroll-spacer" aria-hidden="true"></div>
   </div>
   
   <div class="static-timeline" id="static-timeline" aria-label="Timeline 1977-2026">
