@@ -3,463 +3,1928 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zach Nelson — Geospatial Data Scientist</title>
-  <meta name="description" content="Senior Geospatial Data Scientist and Science Coordinator for the Inyo/Los Angeles Long-Term Water Agreement. Groundwater-dependent ecosystems, remote sensing, wildlife habitat ecology, and reproducible science." />
+  <title>Zach Nelson</title>
+  <meta name="description" content="Following curiosity and building practical tools for geospatial data and ecological systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --name: #f4f7f5;
-      --ink: #152018;
-      --muted: #3d4f45;
-      --sage: #6f8f6a;
-      --water: #2a6f7e;
-      --sand: #c9b896;
-      --paper: #eef2ee;
-      --line: rgba(21, 32, 24, 0.12);
+      --ink: #1a1a1a;
+      --ink-light: #4a4a4a;
+      --line: #d4d4d4;
+      --line-light: #e8e8e8;
+      --paper: #fafaf8;
+      --paper-warm: #f9f8f6;
+      --white: #ffffff;
+      --accent: #2a5a7a;
+      --accent-soft: #4a7a9a;
+      --voyager: #b8935f;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    
+    * { 
+      box-sizing: border-box;
       margin: 0;
-      font-family: "DM Sans", system-ui, sans-serif;
+      padding: 0;
+    }
+    
+    html { 
+      scroll-behavior: smooth;
+      background: var(--paper);
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink);
       background: var(--paper);
-      line-height: 1.55;
+      line-height: 1.6;
+      font-size: 16px;
     }
-    a { color: var(--water); }
-    .skip {
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+    
+    a:hover {
+      border-bottom-color: var(--accent);
+    }
+    
+    code, .mono {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9em;
+    }
+    
+    .serif {
+      font-family: 'Crimson Pro', Georgia, serif;
+    }
+    
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .skip-link {
       position: absolute;
       left: -9999px;
+      z-index: 999;
     }
-    .skip:focus {
-      left: 0.75rem;
-      top: 0.75rem;
-      z-index: 40;
-      background: var(--paper);
-      padding: 0.5rem 0.75rem;
+    
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      background: var(--white);
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--ink);
     }
-
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: clamp(1.5rem, 4vw, 3rem);
-      color: var(--name);
-      overflow: hidden;
+    
+    /* Header */
+    header {
+      padding: 4rem 0 3rem;
     }
-    .hero-sky {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(18, 28, 34, 0.15) 0%, rgba(18, 28, 34, 0.55) 55%, rgba(12, 20, 16, 0.88) 100%),
-        linear-gradient(115deg, #8eb4c4 0%, #b8c9a8 38%, #d4c4a0 62%, #7a8f6e 100%);
-      animation: skyShift 22s ease-in-out infinite alternate;
-    }
-    @keyframes skyShift {
-      from { filter: saturate(1) hue-rotate(0deg); }
-      to { filter: saturate(1.08) hue-rotate(-8deg); }
-    }
-    .hero-ridges {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 58%;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 520' preserveAspectRatio='none'%3E%3Cpath fill='%232a3a32' d='M0 320 L180 260 L360 300 L520 200 L700 280 L900 160 L1100 240 L1280 190 L1440 250 L1440 520 L0 520 Z'/%3E%3Cpath fill='%231e2c26' d='M0 380 L220 320 L400 360 L600 280 L820 340 L1040 260 L1240 320 L1440 290 L1440 520 L0 520 Z'/%3E%3Cpath fill='%23152018' d='M0 440 L300 400 L560 430 L800 380 L1100 420 L1440 390 L1440 520 L0 520 Z'/%3E%3C/svg%3E")
-        bottom / 100% 100% no-repeat;
-      animation: ridgeDrift 28s ease-in-out infinite alternate;
-    }
-    @keyframes ridgeDrift {
-      from { transform: translateX(0) scale(1); }
-      to { transform: translateX(-1.5%) scale(1.02); }
-    }
-    .hero-floor {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 18%;
-      background: linear-gradient(180deg, transparent, rgba(30, 50, 40, 0.5));
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 42rem;
-      animation: riseIn 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    @keyframes riseIn {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .brand {
-      font-family: Fraunces, Georgia, serif;
-      font-size: clamp(2.8rem, 8vw, 4.6rem);
+    
+    h1 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 2.5rem;
       font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 0.98;
-      margin: 0 0 0.85rem;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.35);
-    }
-    .headline {
-      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-      font-weight: 500;
-      margin: 0 0 0.65rem;
-      max-width: 34rem;
-      color: rgba(244, 247, 245, 0.95);
-    }
-    .support {
-      margin: 0 0 1.4rem;
-      max-width: 34rem;
-      color: rgba(244, 247, 245, 0.78);
-      font-size: 0.98rem;
-    }
-    .ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-    }
-    .ctas a {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.7rem 1.15rem;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.92rem;
-      transition: transform 160ms ease, background 160ms ease;
-    }
-    .ctas a:hover { transform: translateY(-1px); }
-    .cta-primary {
-      background: var(--sand);
-      color: var(--ink);
-    }
-    .cta-secondary {
-      background: transparent;
-      color: var(--name);
-      border: 1px solid rgba(244, 247, 245, 0.45);
-    }
-
-    section {
-      padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 3rem);
-      max-width: 920px;
-      margin: 0 auto;
-    }
-    section h2 {
-      font-family: Fraunces, Georgia, serif;
-      font-size: clamp(1.55rem, 3vw, 2rem);
-      font-weight: 550;
-      margin: 0 0 0.5rem;
       letter-spacing: -0.02em;
+      margin-bottom: 1rem;
     }
-    .section-lead {
-      margin: 0 0 1.5rem;
-      color: var(--muted);
-      max-width: 40rem;
+    
+    .lede {
+      font-size: 1.05rem;
+      color: var(--ink-light);
+      max-width: 36rem;
     }
-
-    .about {
-      background: #e4ebe4;
+    
+    /* Sections */
+    section {
+      margin-bottom: 4rem;
     }
-    .about p {
-      margin: 0 0 1rem;
-      max-width: 42rem;
-      color: var(--muted);
+    
+    h2 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
     }
-    .about p:last-child { margin-bottom: 0; }
-    .years {
+    
+    h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    /* Timeline viz */
+    .viz-container {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    #timeline-viz {
+      width: 100%;
+      min-height: 560px;
+      background: var(--white);
+    }
+    
+    @media (max-width: 768px) {
+      #timeline-viz {
+        min-height: 480px;
+      }
+    }
+    
+    .scrubber-controls {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line-light);
+    }
+    
+    .scrubber-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--ink-light);
+    }
+    
+    .current-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+    
+    #year-scrubber {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--line-light);
+      outline: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    #year-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    #year-scrubber::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    #year-scrubber:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    
+    .legend {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line-light);
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+    
+    .legend-items {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem 1.25rem;
-      margin: 1.5rem 0 0;
-      padding: 0;
-      list-style: none;
+      gap: 1rem;
+      margin-top: 0.5rem;
     }
-    .years li {
-      font-size: 0.9rem;
-      color: var(--ink);
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
-    .years strong {
-      display: block;
-      font-family: Fraunces, Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: var(--water);
-      line-height: 1.1;
-    }
-
-    .duties-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      border-top: 1px solid var(--line);
-    }
-    .duties-list li {
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      padding-left: 1.1rem;
-      position: relative;
-    }
-    .duties-list li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 1.25rem;
-      width: 0.4rem;
-      height: 0.4rem;
-      background: var(--sage);
+    
+    .legend-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
     }
-
-    .work-list {
+    
+    /* Fallback list */
+    .timeline-list {
       list-style: none;
-      padding: 0;
+      margin-bottom: 2rem;
+    }
+    
+    .timeline-list li {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: 0.95rem;
+    }
+    
+    .timeline-list li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: var(--accent-soft);
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    
+    .timeline-list strong {
+      display: block;
+      margin-bottom: 0.15rem;
+      color: var(--ink);
+    }
+    
+    .timeline-list .year {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin-right: 0.5rem;
+    }
+    
+    .timeline-list p {
       margin: 0;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+    }
+    
+    /* Projects */
+    .project-list {
+      list-style: none;
+    }
+    
+    .project {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--line-light);
+    }
+    
+    .project:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .project-header {
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    
+    .project-what {
+      color: var(--ink-light);
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+    
+    .project-meta {
+      margin-top: 0.75rem;
+    }
+    
+    .project-meta p {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .project-meta strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    
+    .project-tools {
+      color: var(--ink-light);
+    }
+    
+    .project-link {
+      font-size: 0.9rem;
+    }
+    
+    /* Tools section */
+    .tools-inline {
+      color: var(--ink-light);
+      line-height: 1.8;
+    }
+    
+    /* Future paths */
+    .future-list {
+      list-style: none;
+      color: var(--ink-light);
+      font-style: italic;
+    }
+    
+    .future-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    
+    .future-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent-soft);
+    }
+    
+    /* Contact */
+    .contact {
+      padding: 2rem 0 3rem;
+      margin-top: 3rem;
       border-top: 1px solid var(--line);
     }
-    .work-list li {
-      display: grid;
-      grid-template-columns: minmax(7rem, 9rem) 1fr;
-      gap: 1rem;
-      padding: 1.15rem 0;
-      border-bottom: 1px solid var(--line);
+    
+    .contact p {
+      margin-bottom: 0.5rem;
+      color: var(--ink-light);
     }
-    .work-list .domain {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--water);
-      font-weight: 600;
-      padding-top: 0.2rem;
+    
+    /* Footer */
+    footer {
+      padding: 2rem 0;
+      margin-top: 2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--ink-light);
     }
-    .work-list h3 {
-      font-family: Fraunces, Georgia, serif;
-      font-size: 1.15rem;
-      font-weight: 550;
-      margin: 0 0 0.3rem;
+    
+    /* SVG styles */
+    .timeline-path {
+      fill: none;
+      stroke: var(--accent-soft);
+      stroke-width: 2;
+      stroke-linecap: round;
     }
-    .work-list p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
+    
+    .future-path {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1.5;
+      stroke-dasharray: 4, 4;
+      stroke-linecap: round;
     }
-
-    .tools-block {
-      background: #e4ebe4;
+    
+    .node {
+      cursor: pointer;
     }
-    .tool-groups {
-      display: grid;
-      gap: 1.25rem;
+    
+    .node circle {
+      stroke: var(--white);
+      stroke-width: 1.5;
     }
-    @media (min-width: 700px) {
-      .tool-groups { grid-template-columns: 1fr 1fr; }
+    
+    .node.baseline circle { fill: var(--voyager); }
+    .node.science circle { fill: #6b8db8; }
+    .node.ecology circle { fill: #6b9b7b; }
+    .node.technical circle { fill: #8b7b9b; }
+    .node.modeling circle { fill: #b89b6b; }
+    .node.application circle { fill: #6b9bb8; }
+    .node.practice circle { fill: #9b8b7b; }
+    .node.social circle { fill: #b87b7b; }
+    .node.fieldwork circle { fill: #7b9b9b; }
+    
+    .node.highlighted circle {
+      stroke-width: 2.5;
+      stroke: var(--ink);
     }
-    .tool-groups h3 {
-      font-family: Fraunces, Georgia, serif;
-      font-size: 1.1rem;
-      margin: 0 0 0.35rem;
-      font-weight: 550;
+    
+    .node.dimmed circle {
+      opacity: 0.15;
     }
-    .tool-groups p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
+    
+    .node text {
+      font-size: 11px;
+      fill: var(--ink);
+      pointer-events: none;
+      user-select: none;
+      font-family: 'Inter', sans-serif;
+      opacity: 0;
+      transition: opacity 0.2s ease;
     }
-
-    .pubs ul {
-      margin: 0;
-      padding-left: 1.1rem;
-      color: var(--muted);
+    
+    .node.hub text {
+      opacity: 0.7;
     }
-    .pubs li { margin: 0 0 0.75rem; }
-    .pubs li:last-child { margin-bottom: 0; }
-
-    .contact {
-      background: var(--ink);
-      color: var(--name);
-      max-width: none;
-      padding-left: clamp(1.25rem, 4vw, 3rem);
-      padding-right: clamp(1.25rem, 4vw, 3rem);
+    
+    .node:hover text,
+    .node:focus text,
+    .node.highlighted text {
+      opacity: 1;
     }
-    .contact-inner { max-width: 920px; margin: 0 auto; }
-    .contact h2 { color: var(--name); }
-    .contact .section-lead { color: rgba(244,247,245,0.65); }
-    .contact a { color: var(--sand); }
-    .contact p { margin: 0 0 0.5rem; }
-    .contact p:last-child { margin: 0; }
-
-    footer.site {
-      padding: 1.25rem clamp(1.25rem, 4vw, 3rem) 2rem;
-      max-width: 920px;
-      margin: 0 auto;
-      font-size: 0.82rem;
-      color: var(--muted);
+    
+    .link {
+      stroke: var(--line);
+      stroke-width: 1;
+      stroke-opacity: 0.3;
     }
-
-    @media (max-width: 560px) {
-      .work-list li { grid-template-columns: 1fr; gap: 0.35rem; }
+    
+    .link.highlighted {
+      stroke: var(--accent);
+      stroke-opacity: 0.6;
+      stroke-width: 1.5;
     }
-
+    
+    .link.dimmed {
+      stroke-opacity: 0.08;
+    }
+    
+    .year-marker {
+      font-size: 11px;
+      fill: var(--ink-light);
+      font-weight: 400;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 3rem 0 2rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .viz-container {
+        padding: 1.5rem;
+      }
+      
+      #timeline-viz {
+        min-height: 480px;
+      }
+      
+      .legend-items {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+    
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .hero-sky, .hero-ridges, .hero-content { animation: none; }
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+      
+      html {
+        scroll-behavior: auto;
+      }
+    }
+    
+    /* Scroll Timeline Animation */
+    .scroll-timeline {
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #f5f3f0 0%, var(--paper-warm) 50%, #f5f3f0 100%);
+      border-bottom: 2px solid var(--line);
+    }
+    
+    .scroll-spacer {
+      height: 15400px;
+      width: 100%;
+      pointer-events: none;
+    }
+    
+    .timeline-scene {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .year-counter {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-shadow: 0 0 10px rgba(255,255,255,0.8);
+      z-index: 20;
+    }
+    
+    .voyager-sprite {
+      position: absolute;
+      top: 3rem;
+      left: 0;
+      transition: transform 0.1s linear;
+      z-index: 12;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    
+    .voyager-sprite svg {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .character {
+      position: absolute;
+      left: 35%;
+      bottom: 30%;
+      width: 80px;
+      height: 130px;
+      transform: translateX(-50%);
+      z-index: 15;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+    }
+    
+    .character-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .character-stage.active {
+      opacity: 1;
+    }
+    
+    .character.walking .leg-left {
+      animation: walk-left 0.6s ease-in-out infinite;
+    }
+    
+    .character.walking .leg-right {
+      animation: walk-right 0.6s ease-in-out infinite;
+    }
+    
+    @keyframes walk-left {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(-2px) translateY(-4px); }
+    }
+    
+    @keyframes walk-right {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(2px) translateY(-4px); }
+    }
+    
+    .timeline-path {
+      position: absolute;
+      bottom: 30%;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      transform: translateY(50%);
+      opacity: 0.9;
+    }
+    
+    .timeline-path path {
+      stroke-width: 3;
+      stroke: var(--accent);
+      stroke-linecap: round;
+    }
+    
+    .milestone-markers {
+      position: absolute;
+      bottom: 30%;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      pointer-events: none;
+    }
+    
+    .milestone {
+      position: absolute;
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      text-align: center;
+      transform: translate(-50%, -50%);
+    }
+    
+    .current-milestone {
+      position: absolute;
+      left: 50%;
+      bottom: 20%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: var(--ink);
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      z-index: 14;
+      background: rgba(245, 243, 240, 0.9);
+      padding: 0.35rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    
+    .scene-props {
+      position: absolute;
+      bottom: 30%;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      pointer-events: none;
+      z-index: 8;
+    }
+    
+    .prop {
+      position: absolute;
+      opacity: 0.5;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .prop.active {
+      opacity: 0.85;
+      transform: scale(1.15);
+    }
+    
+    .prop svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .dispatch-feed {
+      position: fixed;
+      top: 6rem;
+      right: 2rem;
+      width: 280px;
+      max-height: calc(100vh - 8rem);
+      overflow-y: auto;
+      z-index: 15;
+      pointer-events: all;
+    }
+    
+    .dispatch-title {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    
+    .dispatch-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    
+    .dispatch-card.no-thumbnail {
+      display: block;
+    }
+    
+    .dispatch-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .dispatch-card.newest {
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .dispatch-thumbnail {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+    
+    .dispatch-content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .dispatch-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      margin-bottom: 0.15rem;
+    }
+    
+    .dispatch-card-title {
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-bottom: 0.15rem;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    
+    .dispatch-text {
+      font-size: 0.7rem;
+      color: var(--ink-light);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .dispatch-source {
+      font-size: 0.65rem;
+      color: var(--accent-soft);
+    }
+    
+    /* Static timeline (reduced motion) */
+    .static-timeline {
+      display: none;
+      padding: 3rem 1.5rem;
+      background: var(--paper-warm);
+      border-bottom: 2px solid var(--line);
+    }
+    
+    .static-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    
+    .static-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    
+    .static-path {
+      flex: 1;
+      height: 3px;
+      background: var(--accent-soft);
+      margin: 0 2rem;
+    }
+    
+    .static-milestones, .static-voyager-list {
+      margin-bottom: 2rem;
+    }
+    
+    .static-milestones h3, .static-voyager-list h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+    }
+    
+    .static-milestones ul, .static-voyager-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .static-milestones li, .static-voyager-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--line-light);
+      font-size: 0.9rem;
+      color: var(--ink-light);
+    }
+    
+    .static-milestones strong, .static-voyager-list strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+    
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .year-counter {
+        font-size: 2rem;
+        top: 1rem;
+        left: 1rem;
+      }
+      
+      .dispatch-feed {
+        position: static;
+        width: 100%;
+        max-height: none;
+        padding: 1rem;
+        background: var(--white);
+        border-top: 1px solid var(--line);
+        margin-top: -100vh;
+        z-index: 20;
+      }
+      
+      .timeline-scene {
+        height: 70vh;
+      }
+      
+      .scroll-spacer {
+        height: 5500px;
+      }
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-timeline {
+        display: none;
+      }
+      
+      .static-timeline {
+        display: block;
+      }
+      
+      .character.walking .character-stage.active {
+        animation: none;
+      }
+    }
+    
+    /* Print */
+    @media print {
+      .scrubber-controls,
+      .skip-link,
+      .scroll-timeline {
+        display: none;
+      }
+      
+      .static-timeline {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
-  <a class="skip" href="#about">Skip to content</a>
-
-  <header class="hero">
-    <div class="hero-sky" aria-hidden="true"></div>
-    <div class="hero-ridges" aria-hidden="true"></div>
-    <div class="hero-floor" aria-hidden="true"></div>
-    <div class="hero-content">
-      <h1 class="brand">Zach Nelson</h1>
-      <p class="headline">Geospatial science for groundwater-dependent ecosystems.</p>
-      <p class="support">
-        Senior Geospatial Data Scientist and Science Coordinator for the Long-Term Water Agreement
-        between Inyo County and the City of Los Angeles.
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
+  <!-- Scroll Timeline Animation -->
+  <div class="scroll-timeline" id="scroll-timeline" aria-label="Interactive timeline 1977-2026">
+    <div class="timeline-scene">
+      <div class="year-counter" id="year-counter" aria-live="polite">1977</div>
+      
+      <div class="voyager-sprite" id="voyager-sprite" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="3" fill="var(--voyager)" />
+          <line x1="10" y1="4" x2="10" y2="16" stroke="var(--voyager)" stroke-width="1" />
+          <line x1="4" y1="10" x2="16" y2="10" stroke="var(--voyager)" stroke-width="1" />
+        </svg>
+      </div>
+      
+      <div class="current-milestone" id="current-milestone"></div>
+      
+      <div class="scene-props" id="scene-props"></div>
+      
+      <div class="character" id="character">
+        <svg class="character-stage" data-stage="baby" viewBox="0 0 60 80">
+          <!-- Head -->
+          <circle cx="30" cy="22" r="10" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="21" r="1.5" fill="var(--ink)" />
+          <circle cx="33" cy="21" r="1.5" fill="var(--ink)" />
+          <circle cx="30" cy="25" r="2" fill="#ffa0a0" opacity="0.6" />
+          <!-- Torso -->
+          <ellipse cx="30" cy="48" rx="9" ry="16" fill="var(--accent-soft)" />
+          <!-- Arms -->
+          <line x1="23" y1="42" x2="15" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="37" y1="42" x2="45" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="62" x2="23" y2="75" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="34" y1="62" x2="37" y2="75" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+        </svg>
+        
+        <svg class="character-stage" data-stage="kid" viewBox="0 0 60 100">
+          <!-- Head -->
+          <circle cx="30" cy="18" r="8.5" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.3" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.3" fill="var(--ink)" />
+          <path d="M27,20.5 Q30,21.5 33,20.5" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="23" y="26.5" width="14" height="35" fill="var(--accent-soft)" rx="2.5" />
+          <!-- Arms -->
+          <line x1="23" y1="36" x2="13" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="37" y1="36" x2="47" y2="52" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="61.5" x2="23" y2="92" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="61.5" x2="37" y2="92" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
+        </svg>
+        
+        <svg class="character-stage" data-stage="teen" viewBox="0 0 60 110">
+          <!-- Head -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="23" y="26" width="14" height="39" fill="var(--accent)" rx="2.5" />
+          <!-- Arms -->
+          <line x1="23" y1="34" x2="12" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <line x1="37" y1="34" x2="48" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="65" x2="24" y2="102" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="65" x2="36" y2="102" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
+        </svg>
+        
+        <svg class="character-stage" data-stage="student" viewBox="0 0 60 115">
+          <!-- Head -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="22" y="26" width="16" height="40" fill="var(--accent-soft)" rx="3" />
+          <!-- Backpack straps -->
+          <rect x="20" y="33" width="20" height="4" fill="var(--ink-light)" />
+          <!-- Arms -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <line x1="38" y1="35" x2="50" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
+        </svg>
+        
+        <svg class="character-stage" data-stage="biologist" viewBox="0 0 60 115">
+          <!-- Wide-brim hat -->
+          <ellipse cx="30" cy="12" rx="13" ry="3" fill="#8b7b6b" />
+          <rect x="24" y="10" width="12" height="6" fill="#8b7b6b" rx="1.5" />
+          <!-- Head with simple face -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso with vest -->
+          <rect x="22" y="26" width="16" height="40" fill="#7b9b7b" rx="3" />
+          <rect x="20" y="30" width="20" height="14" fill="#6b8b6b" rx="2" />
+          <circle cx="23" cy="37" r="1.5" fill="#4a5a4a" />
+          <circle cx="37" cy="37" r="1.5" fill="#4a5a4a" />
+          <!-- Arms -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <line x1="38" y1="35" x2="50" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Binoculars on strap -->
+          <path d="M25,26 Q30,28 35,26" stroke="var(--ink)" stroke-width="1.5" fill="none" />
+          <rect x="26" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <rect x="30.5" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <line x1="29.5" y1="47.5" x2="30.5" y2="47.5" stroke="var(--ink)" stroke-width="0.8" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
+        </svg>
+        
+        <svg class="character-stage" data-stage="biologist-gps" viewBox="0 0 60 115">
+          <!-- Wide-brim hat -->
+          <ellipse cx="30" cy="12" rx="13" ry="3" fill="#8b7b6b" />
+          <rect x="24" y="10" width="12" height="6" fill="#8b7b6b" rx="1.5" />
+          <!-- Head with simple face -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso with vest -->
+          <rect x="22" y="26" width="16" height="40" fill="#7b9b7b" rx="3" />
+          <rect x="20" y="30" width="20" height="14" fill="#6b8b6b" rx="2" />
+          <circle cx="23" cy="37" r="1.5" fill="#4a5a4a" />
+          <circle cx="37" cy="37" r="1.5" fill="#4a5a4a" />
+          <!-- Left arm -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Right arm holding GPS -->
+          <line x1="38" y1="35" x2="46" y2="48" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <rect x="43" y="46" width="11" height="15" fill="#d4d4d4" stroke="var(--ink)" stroke-width="1" rx="1.5" />
+          <rect x="44.5" y="47.5" width="8" height="9" fill="#b5e5cf" stroke="var(--ink)" stroke-width="0.5" />
+          <circle cx="48.5" cy="59" r="1.5" fill="#666" />
+          <!-- Binoculars on strap -->
+          <path d="M25,26 Q30,28 35,26" stroke="var(--ink)" stroke-width="1.5" fill="none" />
+          <rect x="26" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <rect x="30.5" y="45" width="3.5" height="5" fill="#333" stroke="var(--ink)" stroke-width="0.8" rx="0.5" />
+          <line x1="29.5" y1="47.5" x2="30.5" y2="47.5" stroke="var(--ink)" stroke-width="0.8" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
+        </svg>
+        
+        <svg class="character-stage" data-stage="scientist" viewBox="0 0 60 115">
+          <!-- Head with simple face (no hat for modern stage) -->
+          <circle cx="30" cy="18" r="8" fill="#f5d0a8" stroke="var(--ink)" stroke-width="1" />
+          <circle cx="27" cy="17" r="1.2" fill="var(--ink)" />
+          <circle cx="33" cy="17" r="1.2" fill="var(--ink)" />
+          <path d="M27,21 Q30,22 33,21" stroke="var(--ink)" stroke-width="0.8" fill="none" />
+          <!-- Torso -->
+          <rect x="22" y="26" width="16" height="40" fill="var(--accent)" rx="3" />
+          <!-- Left arm -->
+          <line x1="22" y1="35" x2="10" y2="50" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <!-- Right arm holding laptop -->
+          <line x1="38" y1="35" x2="46" y2="48" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" />
+          <rect x="42" y="46" width="16" height="11" fill="#555" stroke="var(--ink)" stroke-width="1" rx="1" />
+          <rect x="43" y="47" width="14" height="8" fill="#88c" stroke="var(--ink)" stroke-width="0.5" />
+          <line x1="42" y1="57" x2="58" y2="57" stroke="var(--ink)" stroke-width="1.5" />
+          <!-- Legs -->
+          <line x1="26" y1="66" x2="24" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-left" />
+          <line x1="34" y1="66" x2="36" y2="105" stroke="var(--ink)" stroke-width="3.5" stroke-linecap="round" class="leg-right" />
+        </svg>
+      </div>
+      
+      <svg class="timeline-path" id="timeline-path" viewBox="0 0 2000 200" preserveAspectRatio="none">
+        <path id="meandering-path" d="M0,100 L2000,100" 
+              fill="none" stroke="var(--accent-soft)" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      
+      <div class="milestone-markers" id="milestone-markers"></div>
+    </div>
+    
+    <aside class="dispatch-feed" id="dispatch-feed" aria-label="Voyager mission timeline">
+      <h2 class="dispatch-title">Voyager Dispatches</h2>
+      <div class="dispatch-cards" id="dispatch-cards"></div>
+    </aside>
+    
+    <div class="scroll-spacer" aria-hidden="true"></div>
+  </div>
+  
+  <div class="static-timeline" id="static-timeline" aria-label="Timeline 1977-2026">
+    <div class="static-strip">
+      <div class="static-year">1977</div>
+      <div class="static-path"></div>
+      <div class="static-year">2026</div>
+    </div>
+    <div class="static-milestones" id="static-milestones"></div>
+    <div class="static-voyager-list" id="static-voyager-list"></div>
+  </div>
+  
+  <div class="container">
+    <header id="main">
+      <h1>Zach Nelson</h1>
+      <p class="lede">
+        Following curiosity and building practical tools for geospatial data and ecological systems.
       </p>
-      <div class="ctas">
-        <a class="cta-primary" href="#role">Role &amp; duties</a>
-        <a class="cta-secondary" href="#contact">Contact</a>
-      </div>
-    </div>
-  </header>
-
-  <section class="about" id="about">
-    <h2>About</h2>
-    <p>
-      I work primarily as a Senior Geospatial Data Scientist and Science Coordinator responsible for
-      overseeing science relating to the Long-Term Water Agreement between Inyo County and the City of Los Angeles.
-    </p>
-    <p>
-      I’m a GIS expert, remote sensing specialist, small unmanned aerial system pilot in command, and
-      wildlife habitat ecologist, experienced in statistical, grid-based, and agent-based modeling.
-    </p>
-    <p>
-      I have a special interest in literate and functional programming, reproducible and open science,
-      automated reporting, data pipelining (<code>targets</code>), and application development
-      (R Shiny and ArcGIS Online mapping applications).
-    </p>
-    <ul class="years" aria-label="Domain experience">
-      <li><strong>14 yrs</strong> Groundwater-dependent ecosystems</li>
-      <li><strong>24 yrs</strong> Avian habitat ecology</li>
-      <li><strong>22 yrs</strong> Remote sensing &amp; mapping</li>
-    </ul>
-  </section>
-
-  <section id="role">
-    <h2>Role &amp; duties</h2>
-    <p class="section-lead">
-      Senior Scientist, Inyo County Water Department — research, monitoring, geospatial systems,
-      staff supervision, and representation before governing bodies.
-    </p>
-    <ul class="duties-list">
-      <li>Direct research and monitoring related to riparian and groundwater-dependent ecosystems, wildlife ecology, geospatial applications, and remote sensing</li>
-      <li>Develop and lead interdisciplinary research projects that improve monitoring and management to protect or enhance the environment</li>
-      <li>Coordinate with senior scientific and management staff to determine and implement Owens Valley management goals and strategies</li>
-      <li>Collect and analyze field and laboratory data; prepare and deliver written and oral technical reports</li>
-      <li>Supervise and train department field staff; conduct annual performance evaluations</li>
-      <li>Prepare staffing and budgets for activities and studies; assist in preparation and management of departmental budgets</li>
-      <li>Participate in department program development; obtain funding; manage grants and contracts related to monitoring and research</li>
-      <li>Develop and manage departmental work plans and grants</li>
-      <li>Represent the department before the Board of Supervisors, the Water Commission, the Standing Committee, the Technical Group, other governmental bodies, private organizations, and the public</li>
-    </ul>
-  </section>
-
-  <section id="work">
-    <h2>Selected work</h2>
-    <p class="section-lead">Where monitoring, models, and management meet.</p>
-    <ul class="work-list">
-      <li>
-        <span class="domain">GDE / LTWA</span>
-        <div>
-          <h3>Science coordination for the Water Agreement</h3>
-          <p>Direct research and monitoring of riparian and groundwater-dependent systems; advise legal counsel and elected officials on ecological change associated with groundwater extraction.</p>
+    </header>
+    
+    <main id="main">
+      <section>
+        <h2>The path curiosity takes</h2>
+        <div class="viz-container">
+          <svg id="timeline-viz" role="img" aria-label="Interactive timeline and knowledge graph from 1977 to present"></svg>
+          
+          <div class="scrubber-controls" role="region" aria-label="Time controls">
+            <div class="scrubber-label">
+              <span>Explore the timeline</span>
+              <span class="current-year" id="current-year-display" aria-live="polite">2026</span>
+            </div>
+            <input 
+              type="range" 
+              id="year-scrubber" 
+              min="1977" 
+              max="2026" 
+              value="2026" 
+              step="1"
+              aria-label="Year slider"
+            />
+          </div>
+          
+          <div class="legend">
+            <div class="legend-items">
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #6b8db8;"></span>
+                <span>Science</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #6b9b7b;"></span>
+                <span>Ecology</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #8b7b9b;"></span>
+                <span>Technical</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #b89b6b;"></span>
+                <span>Modeling</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #6b9bb8;"></span>
+                <span>Application</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #9b8b7b;"></span>
+                <span>Practice</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #b87b7b;"></span>
+                <span>Social</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #7b9b9b;"></span>
+                <span>Field work</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </li>
-      <li>
-        <span class="domain">Geospatial</span>
-        <div>
-          <h3>Data models &amp; mapping applications</h3>
-          <p>GIS archives for ecological and hydrological data; wildlife habitat modeling, vegetation response to disturbance, change detection, and environmental compliance tooling across ArcGIS Enterprise and AGOL.</p>
-        </div>
-      </li>
-      <li>
-        <span class="domain">Remote sensing</span>
-        <div>
-          <h3>UAV, photogrammetry &amp; Earth Engine</h3>
-          <p>Small UAS PIC workflows, optical change detection, and reproducible pipelines for valley-scale observation.</p>
-        </div>
-      </li>
-      <li>
-        <span class="domain">Open science</span>
-        <div>
-          <h3>Literate programming &amp; automated reporting</h3>
-          <p>targets pipelines, Quarto / R Markdown reporting, R Shiny and AGOL apps that keep methods auditable for decision makers.</p>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <section class="tools-block" id="tools">
-    <h2>Tools &amp; methods</h2>
-    <p class="section-lead">Day-to-day stack for analysis, field data, and decision support.</p>
-    <div class="tool-groups">
-      <div>
-        <h3>Geospatial &amp; remote sensing</h3>
-        <p>ArcGIS Pro, Field Maps, ArcGIS Online / Enterprise, Earth Engine (Python API), UAV / photogrammetry, database design and administration</p>
+        
+        <!-- Fallback timeline list -->
+        <ul class="timeline-list" aria-label="Timeline of interests">
+          <li>
+            <strong><span class="year">1977</span>Voyager launches</strong>
+          </li>
+          <li>
+            <strong><span class="year">1994</span>Physics & calculus</strong>
+            <p>Community college courses while in high school</p>
+          </li>
+          <li>
+            <strong><span class="year">1996</span>Biochemistry</strong>
+            <p>Started undergraduate work</p>
+          </li>
+          <li>
+            <strong><span class="year">2000</span>Wildlife biology</strong>
+            <p>Degree completed; field work begins</p>
+          </li>
+          <li>
+            <strong><span class="year">2000–2001</span>Rats, mongoose, and birds, Hawaii</strong>
+          </li>
+          <li>
+            <strong><span class="year">2001</span>Birds, Mexico</strong>
+          </li>
+          <li>
+            <strong><span class="year">2001</span>Birds, San Clemente Island</strong>
+          </li>
+          <li>
+            <strong><span class="year">2001</span>Geospatial</strong>
+            <p>GIS and spatial analysis</p>
+          </li>
+          <li>
+            <strong><span class="year">2002</span>Birds, Texas</strong>
+          </li>
+          <li>
+            <strong><span class="year">2002–fall 2003</span>Island fox, Santa Cruz Island</strong>
+          </li>
+          <li>
+            <strong><span class="year">2002–present</span>Mobile GIS</strong>
+            <p>Constant theme from 2002 to present</p>
+          </li>
+          <li>
+            <strong><span class="year">2002</span>Remote sensing & mapping</strong>
+            <p>Wildlife–habitat relationships</p>
+          </li>
+          <li>
+            <strong><span class="year">Spring 2004</span>Island fox, Santa Cruz Island (return)</strong>
+          </li>
+          <li>
+            <strong><span class="year">2004–2006</span>Snowy plover, Arcata, CA</strong>
+          </li>
+          <li>
+            <strong><span class="year">2004</span>Python & R</strong>
+            <p>GIS scripting; statistics</p>
+          </li>
+          <li>
+            <strong><span class="year">~2006–2007</span>Birds, South Carolina</strong>
+          </li>
+          <li>
+            <strong><span class="year">~2006–2007</span>Birds, Idaho</strong>
+            <p>Through summer 2007</p>
+          </li>
+          <li>
+            <strong><span class="year">2007–2012</span>Sagebrush fire research</strong>
+          </li>
+          <li>
+            <strong><span class="year">2008</span>Modeling</strong>
+            <p>Grid-based and simulation modeling</p>
+          </li>
+          <li>
+            <strong><span class="year">2008</span>Economics & social systems</strong>
+            <p>Macroeconomics, sovereign currency systems, economic models and policy, history, and sociology</p>
+          </li>
+          <li>
+            <strong><span class="year">2012</span>Data science & decision support</strong>
+            <p>R tidyverse (early adopter); decision support tools</p>
+          </li>
+          <li>
+            <strong><span class="year">2012</span>Learning & child development</strong>
+            <p>Learning processes and child development</p>
+          </li>
+          <li>
+            <strong><span class="year">2013–present</span>Scientist, Bishop, CA</strong>
+          </li>
+          <li>
+            <strong><span class="year">2013</span>Reproducible research</strong>
+            <p>Sweave and LaTeX-style literate documents, then Markdown, then R Markdown. Grew from data compliance burden—automated methods to get unburied</p>
+          </li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>Things I've built</h2>
+        <ul class="project-list">
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">flooded-acreage</h3>
+            </div>
+            <p class="project-what">
+              Sentinel-2 satellite threshold analysis for flood mapping
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Valley-scale flood monitoring needed fast, repeatable observations to track inundated acreage by management unit</p>
+              <p><strong>What changed:</strong> Replaced manual field surveys with automated NIR threshold analysis, generating unit-by-unit reports and maps from satellite imagery</p>
+              <p class="project-tools"><strong>Tools:</strong> Sentinel-2, Earth Engine, NIR band thresholding</p>
+              <p class="project-link"><a href="https://github.com/zach-nelson/flooded-acreage">github.com/zach-nelson/flooded-acreage</a></p>
+            </div>
+          </li>
+          
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">pumping-management</h3>
+            </div>
+            <p class="project-what">
+              Soil-plant water balance and groundwater pumping models
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Groundwater pumping decisions needed to balance extraction with ecosystem impacts</p>
+              <p><strong>Tools:</strong> Hydrological modeling, soil-plant water dynamics, groundwater extraction analysis</p>
+              <p class="project-link"><a href="https://github.com/zach-nelson/pumping-management">github.com/zach-nelson/pumping-management</a></p>
+            </div>
+          </li>
+          
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">Automated reporting pipelines</h3>
+            </div>
+            <p class="project-what">
+              Reproducible analysis and report generation workflows
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Data compliance reporting consumed weeks; manual copy-paste introduced errors and made methods opaque to reviewers</p>
+              <p><strong>What changed:</strong> Automated data ingestion through final report delivery; methods became auditable, updates became trivial</p>
+              <p class="project-tools"><strong>Tools:</strong> R, targets, Quarto, R Markdown, functional programming patterns</p>
+            </div>
+          </li>
+          
+          <li class="project">
+            <div class="project-header">
+              <h3 class="project-name">Geospatial decision support applications</h3>
+            </div>
+            <p class="project-what">
+              Interactive mapping and data exploration tools
+            </p>
+            <div class="project-meta">
+              <p><strong>Why:</strong> Field staff and decision makers needed immediate access to monitoring data and habitat models without GIS expertise</p>
+              <p><strong>What changed:</strong> Browser-based tools let stakeholders query spatial data, compare scenarios, and export results without technical staff as intermediaries</p>
+              <p class="project-tools"><strong>Tools:</strong> R Shiny, ArcGIS Online, ArcGIS Enterprise, Python, web mapping APIs</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>Tools I reach for</h2>
+        <p class="tools-inline">
+          R, Python, SQL, targets, ArcGIS Pro, ArcGIS Online, Earth Engine, Git, Quarto, R Markdown, R Shiny, field mapping tools, UAV photogrammetry, statistical modeling, grid-based and agent-based simulation
+        </p>
+      </section>
+      
+      <section>
+        <h2>Open threads</h2>
+        <ul class="future-list">
+          <li>Faster tool-building with AI assistance</li>
+          <li>More simulation and spatial modeling</li>
+          <li>Better decision support systems</li>
+        </ul>
+      </section>
+      
+      <div class="contact">
+        <h2>Contact</h2>
+        <p>
+          <a href="mailto:zjnelson2010@gmail.com">zjnelson2010@gmail.com</a>
+        </p>
+        <p>
+          <a href="https://github.com/zach-nelson">github.com/zach-nelson</a>
+        </p>
+        <p>
+          County role: <a href="https://inyowater.org/contact-us/">inyowater.org/contact-us</a>
+        </p>
       </div>
-      <div>
-        <h3>Analysis &amp; pipelines</h3>
-        <p>R (RStudio), Python (VS Code), SQL, <code>targets</code>, statistical and numerical modeling, grid-based and agent-based models</p>
-      </div>
-      <div>
-        <h3>Applications &amp; reporting</h3>
-        <p>R Shiny, AGOL mapping applications, automated reporting, literate / functional programming, GitHub</p>
-      </div>
-      <div>
-        <h3>Science domains</h3>
-        <p>Groundwater-dependent ecosystems, avian habitat ecology, vegetation studies, science-based decision support for local government</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="pubs" id="publications">
-    <h2>Selected publications</h2>
-    <p class="section-lead">Sagebrush fire ecology and spatial simulation (lead author).</p>
-    <ul>
-      <li>Nelson, Z. J., Weisberg, P. J., Kitchen, S. G. 2013. Influence of climate and environment on post-fire recovery of mountain big sagebrush. <em>International Journal of Wildland Fire</em> 23(1): 131–142.</li>
-      <li>Nelson, Z. J., Weisberg, P. J., Kitchen, S. G. 2008. Post-fire Recovery of Mountain Big Sagebrush Communities in Utah and Nevada. <em>SageSTEP News</em> 9: 4–7.</li>
-      <li>Additional EPSCoR and conference presentations on multi-scale vegetation response, fire regime interactions, and individual-based zone-of-influence models (2007–2013).</li>
-    </ul>
-  </section>
-
-  <section id="education">
-    <h2>Education &amp; training</h2>
-    <p class="section-lead" style="margin-bottom:0.75rem">
-      <strong style="color:var(--ink)">M.Sc., Wildlife — Natural Resources Management</strong>, Cal Poly Humboldt (2007) · GIS, wildlife management, multi-model inference<br />
-      <strong style="color:var(--ink)">B.S., Biochemistry</strong>, Western Washington University (2000)
-    </p>
-    <p style="margin:0;color:var(--muted)">Groundwater Flow and Transport Modeling with GMS (January 2023)</p>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <h2>Contact</h2>
-      <p class="section-lead">
-        Bishop, California. County role listed at
-        <a href="https://inyowater.org/contact-us/">inyowater.org</a>.
-      </p>
-      <p><a href="mailto:zjnelson2010@gmail.com">zjnelson2010@gmail.com</a></p>
-      <p><a href="https://github.com/zach-nelson">github.com/zach-nelson</a></p>
-    </div>
-  </section>
-
-  <footer class="site">
-    © Zach Nelson · Open source on
-    <a href="https://github.com/zach-nelson/zach-nelson.github.io">GitHub</a>
-  </footer>
+    </main>
+    
+    <footer>
+      <p>© Zach Nelson · <a href="https://github.com/zach-nelson/zach-nelson.github.io">Open source on GitHub</a></p>
+    </footer>
+  </div>
+  
+  <!-- D3.js for force-directed graph -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  
+  <!-- Site data -->
+  <script src="data.js"></script>
+  
+  <!-- Visualization script -->
+  <script>
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // SVG setup
+    const svg = d3.select("#timeline-viz");
+    const container = document.querySelector("#timeline-viz");
+    const width = container.clientWidth;
+    const height = window.innerWidth > 768 ? 560 : 480;
+    
+    svg.attr("viewBox", `0 0 ${width} ${height}`);
+    
+    // Margins and layout
+    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    const graphWidth = width - margin.left - margin.right;
+    const graphHeight = height - margin.top - margin.bottom;
+    
+    const g = svg.append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+    
+    // Create meandering path for timeline
+    const pathY = graphHeight * 0.75;
+    const pathData = [
+      { year: 1977, x: 0 },
+      { year: 1985, x: graphWidth * 0.15 },
+      { year: 1995, x: graphWidth * 0.30 },
+      { year: 2005, x: graphWidth * 0.55 },
+      { year: 2015, x: graphWidth * 0.78 },
+      { year: 2026, x: graphWidth }
+    ];
+    
+    // Generate smooth curve for main path
+    const pathCurve = d3.line()
+      .x(d => d.x)
+      .y(d => pathY + Math.sin(d.x / graphWidth * Math.PI * 2.5) * 30)
+      .curve(d3.curveCatmullRom);
+    
+    // Draw main timeline path
+    g.append("path")
+      .datum(pathData)
+      .attr("class", "timeline-path")
+      .attr("d", pathCurve);
+    
+    // Future paths (dashed extensions)
+    const futurePaths = [
+      { angle: -12, length: 80 },
+      { angle: 0, length: 100 },
+      { angle: 12, length: 85 }
+    ];
+    
+    const endX = graphWidth;
+    const endY = pathY + Math.sin(endX / graphWidth * Math.PI * 2.5) * 30;
+    
+    futurePaths.forEach(path => {
+      const radians = path.angle * Math.PI / 180;
+      const futureEndX = endX + path.length * Math.cos(radians);
+      const futureEndY = endY + path.length * Math.sin(radians);
+      
+      g.append("line")
+        .attr("class", "future-path")
+        .attr("x1", endX)
+        .attr("y1", endY)
+        .attr("x2", futureEndX)
+        .attr("y2", futureEndY);
+    });
+    
+    // Year markers on path
+    const yearMarkers = [1977, 1990, 2000, 2010, 2020, 2026];
+    yearMarkers.forEach(year => {
+      const t = (year - 1977) / (2026 - 1977);
+      const x = t * graphWidth;
+      const y = pathY + Math.sin(x / graphWidth * Math.PI * 2.5) * 30;
+      
+      g.append("text")
+        .attr("class", "year-marker")
+        .attr("x", x)
+        .attr("y", y + 22)
+        .attr("text-anchor", "middle")
+        .text(year);
+    });
+    
+    // Force-directed graph
+    const currentYear = 2026;
+    let displayYear = currentYear;
+    
+    function getVisibleNodes(year) {
+      return siteData.nodes.filter(n => n.startYear <= year);
+    }
+    
+    function getVisibleLinks(year) {
+      const visibleNodeIds = new Set(getVisibleNodes(year).map(n => n.id));
+      return siteData.links.filter(l => 
+        visibleNodeIds.has(l.source.id || l.source) && 
+        visibleNodeIds.has(l.target.id || l.target)
+      );
+    }
+    
+    // Time scale for x-anchoring (maps year to x position on path)
+    const timeScale = d3.scaleLinear()
+      .domain([1977, 2026])
+      .range([0, graphWidth]);
+    
+    // Y-band targets for different categories
+    const yBands = {
+      baseline: pathY,
+      fieldwork: pathY - 80,
+      ecology: pathY - 60,
+      science: pathY - 40,
+      technical: pathY + 60,
+      practice: pathY + 80,
+      modeling: pathY + 40,
+      application: pathY + 100,
+      social: pathY - 100
+    };
+    
+    // Create force simulation
+    let simulation = d3.forceSimulation()
+      .force("link", d3.forceLink().id(d => d.id).distance(40))
+      .force("charge", d3.forceManyBody().strength(-120))
+      .force("collision", d3.forceCollide().radius(d => {
+        // Calculate label width for collision
+        const isHub = siteData.hubNodes && siteData.hubNodes.includes(d.id);
+        return isHub ? 35 : 12;
+      }))
+      .force("x", d3.forceX().x(d => {
+        // Anchor each node to its year on the timeline
+        return timeScale(d.startYear);
+      }).strength(0.3))
+      .force("y", d3.forceY().y(d => {
+        // Push nodes into category bands
+        return yBands[d.category] || pathY;
+      }).strength(0.2))
+      .force("bounds", () => {
+        // Keep nodes inside canvas bounds
+        simulation.nodes().forEach(node => {
+          node.x = Math.max(10, Math.min(graphWidth - 10, node.x));
+          node.y = Math.max(10, Math.min(graphHeight - 10, node.y));
+        });
+      });
+    
+    if (prefersReducedMotion) {
+      simulation.alpha(0);
+    }
+    
+    // Create link and node groups
+    const linkGroup = g.append("g").attr("class", "links");
+    const nodeGroup = g.append("g").attr("class", "nodes");
+    
+    let link, node;
+    
+    function updateVisualization(year) {
+      const nodes = getVisibleNodes(year);
+      const links = getVisibleLinks(year);
+      
+      // Update links
+      link = linkGroup.selectAll(".link")
+        .data(links, d => `${d.source.id || d.source}-${d.target.id || d.target}`);
+      
+      link.exit().remove();
+      
+      link = link.enter()
+        .append("line")
+        .attr("class", "link")
+        .merge(link);
+      
+      // Update nodes
+      node = nodeGroup.selectAll(".node")
+        .data(nodes, d => d.id);
+      
+      node.exit().remove();
+      
+      const nodeEnter = node.enter()
+        .append("g")
+        .attr("class", d => {
+          const isHub = siteData.hubNodes && siteData.hubNodes.includes(d.id);
+          return `node ${d.category}${isHub ? ' hub' : ''}`;
+        })
+        .call(d3.drag()
+          .on("start", dragStarted)
+          .on("drag", dragged)
+          .on("end", dragEnded));
+      
+      nodeEnter.append("circle")
+        .attr("r", 6);
+      
+      nodeEnter.append("text")
+        .attr("dx", 9)
+        .attr("dy", 3)
+        .text(d => d.label);
+      
+      node = nodeEnter.merge(node);
+      
+      // Hover interactions
+      node.on("mouseenter", function(event, d) {
+        highlightConnections(d);
+      })
+      .on("mouseleave", function(event, d) {
+        clearHighlight();
+      })
+      .on("focus", function(event, d) {
+        highlightConnections(d);
+      })
+      .on("blur", function(event, d) {
+        clearHighlight();
+      });
+      
+      // Make nodes keyboard accessible
+      node.attr("tabindex", 0)
+        .attr("role", "button")
+        .attr("aria-label", d => `${d.label}, ${d.startYear}`);
+      
+      // Update simulation
+      simulation.nodes(nodes);
+      simulation.force("link").links(links);
+      simulation.alpha(prefersReducedMotion ? 0 : 0.3).restart();
+    }
+    
+    function highlightConnections(d) {
+      const connectedNodes = new Set([d.id]);
+      
+      link.each(function(l) {
+        if (l.source.id === d.id) connectedNodes.add(l.target.id);
+        if (l.target.id === d.id) connectedNodes.add(l.source.id);
+      });
+      
+      node.classed("highlighted", n => n.id === d.id)
+        .classed("dimmed", n => !connectedNodes.has(n.id));
+      
+      link.classed("highlighted", l => l.source.id === d.id || l.target.id === d.id)
+        .classed("dimmed", l => l.source.id !== d.id && l.target.id !== d.id);
+    }
+    
+    function clearHighlight() {
+      node.classed("highlighted", false).classed("dimmed", false);
+      link.classed("highlighted", false).classed("dimmed", false);
+    }
+    
+    function ticked() {
+      // Clamp positions to bounds
+      simulation.nodes().forEach(d => {
+        d.x = Math.max(15, Math.min(graphWidth - 15, d.x));
+        d.y = Math.max(15, Math.min(graphHeight - 15, d.y));
+      });
+      
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+      
+      node
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+    }
+    
+    simulation.on("tick", ticked);
+    
+    function dragStarted(event, d) {
+      if (!event.active && !prefersReducedMotion) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+    
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+    
+    function dragEnded(event, d) {
+      if (!event.active && !prefersReducedMotion) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+    
+    // Year scrubber
+    const scrubber = document.getElementById("year-scrubber");
+    const yearDisplay = document.getElementById("current-year-display");
+    
+    scrubber.addEventListener("input", function(e) {
+      displayYear = parseInt(e.target.value);
+      yearDisplay.textContent = displayYear;
+      updateVisualization(displayYear);
+    });
+    
+    // Keyboard controls for scrubber
+    scrubber.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        setTimeout(() => {
+          displayYear = parseInt(e.target.value);
+          yearDisplay.textContent = displayYear;
+          updateVisualization(displayYear);
+        }, 0);
+      }
+    });
+    
+    // Initialize
+    updateVisualization(displayYear);
+    
+    // Responsive resize
+    let resizeTimeout;
+    window.addEventListener("resize", function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function() {
+        location.reload();
+      }, 500);
+    });
+    
+    // Scroll Timeline Animation
+    (function() {
+      const scrollTimeline = document.getElementById('scroll-timeline');
+      const staticTimeline = document.getElementById('static-timeline');
+      
+      // Check for reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        initStaticTimeline();
+        return;
+      }
+      
+      // Animation state
+      let ticking = false;
+      let currentYear = 1977;
+      let isWalking = false;
+      let lastScrollY = 0;
+      
+      // Elements
+      const yearCounter = document.getElementById('year-counter');
+      const character = document.getElementById('character');
+      const voyagerSprite = document.getElementById('voyager-sprite');
+      const timelinePath = document.getElementById('timeline-path');
+      const dispatchCards = document.getElementById('dispatch-cards');
+      const currentMilestone = document.getElementById('current-milestone');
+      const sceneProps = document.getElementById('scene-props');
+      
+      // Character stages
+      const stages = [
+        { name: 'baby', minYear: 1977, maxYear: 1984 },
+        { name: 'kid', minYear: 1985, maxYear: 1993 },
+        { name: 'teen', minYear: 1994, maxYear: 1995 },
+        { name: 'student', minYear: 1996, maxYear: 1999 },
+        { name: 'biologist', minYear: 2000, maxYear: 2001 },
+        { name: 'biologist-gps', minYear: 2002, maxYear: 2012 },
+        { name: 'scientist', minYear: 2013, maxYear: 2026 }
+      ];
+      
+      // Get all character stage elements
+      const stageElements = {};
+      document.querySelectorAll('.character-stage').forEach(el => {
+        const stage = el.getAttribute('data-stage');
+        stageElements[stage] = el;
+      });
+      
+      // Initialize dispatch cards
+      const voyagerEvents = siteData.voyagerEvents || [];
+      const shownCards = new Set();
+      
+      voyagerEvents.forEach((event, index) => {
+        const card = document.createElement('div');
+        card.className = 'dispatch-card';
+        card.setAttribute('data-year', event.year);
+        card.setAttribute('data-index', index);
+        
+        let cardHTML = '';
+        
+        if (event.image) {
+          cardHTML += `<img class="dispatch-thumbnail" src="${event.image}" alt="${event.title}" loading="lazy" />`;
+        } else {
+          card.classList.add('no-thumbnail');
+        }
+        
+        cardHTML += `
+          <div class="dispatch-content">
+            <div class="dispatch-date">${event.date}</div>
+            <div class="dispatch-card-title">${event.title}</div>
+            <div class="dispatch-text">${event.text}</div>
+            <div class="dispatch-source">
+              <a href="${event.source}" target="_blank" rel="noopener">${event.credit}</a>
+            </div>
+          </div>
+        `;
+        
+        card.innerHTML = cardHTML;
+        dispatchCards.appendChild(card);
+      });
+      
+      // Update function
+      function updateTimeline() {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const spacerHeight = 15400; // Match the scroll-spacer height
+        const scrollProgress = Math.max(0, Math.min(1, scrollY / spacerHeight));
+        
+        // Map scroll to year (1977-2026, inclusive = 49 years)
+        currentYear = Math.round(1977 + scrollProgress * 49);
+        currentYear = Math.max(1977, Math.min(2026, currentYear));
+        
+        // Update year counter
+        yearCounter.textContent = currentYear;
+        
+        // Update character stage
+        let currentStage = stages[0];
+        for (const stage of stages) {
+          if (currentYear >= stage.minYear && currentYear <= stage.maxYear) {
+            currentStage = stage;
+            break;
+          }
+        }
+        
+        // Show/hide character stages
+        Object.keys(stageElements).forEach(stageName => {
+          const el = stageElements[stageName];
+          if (stageName === currentStage.name) {
+            el.classList.add('active');
+          } else {
+            el.classList.remove('active');
+          }
+        });
+        
+        // Update current milestone label
+        const milestones = siteData.timeline || [];
+        const currentMilestoneData = milestones.find(m => m.year === currentYear);
+        if (currentMilestoneData) {
+          currentMilestone.textContent = `${currentYear} · ${currentMilestoneData.label}`;
+          currentMilestone.style.opacity = '1';
+        } else {
+          currentMilestone.style.opacity = '0';
+        }
+        
+        // Show props for field-work related milestones
+        const fieldWorkYears = {
+          2000: 'bird',    // Wildlife biology start
+          2002: 'island',  // Santa Cruz Island
+          2004: 'bird',    // Snowy plover
+          2005: 'fox',     // Island fox
+          2008: 'sagebrush' // Sagebrush habitat
+        };
+        
+        sceneProps.innerHTML = '';
+        Object.entries(fieldWorkYears).forEach(([year, propType]) => {
+          const y = parseInt(year);
+          if (Math.abs(currentYear - y) <= 3) {
+            const prop = document.createElement('div');
+            prop.className = 'prop';
+            if (currentYear === y) prop.classList.add('active');
+            
+            const xPos = 20 + (Math.random() * 60);
+            const yPos = 60 + (Math.random() * 30);
+            prop.style.left = `${xPos}%`;
+            prop.style.top = `${yPos}%`;
+            prop.style.width = '36px';
+            prop.style.height = '36px';
+            
+            let svg = '';
+            if (propType === 'bird') {
+              svg = `<svg width="36" height="36" viewBox="0 0 36 36">
+                <path d="M18,16 L14,12 L10,14 M18,16 L22,12 L26,14" stroke="#5a6a5a" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="18" cy="20" rx="6" ry="5" fill="#5a6a5a" />
+                <circle cx="16" cy="19" r="1" fill="#2a3a2a" />
+                <path d="M8,24 Q18,26 28,24" stroke="#5a6a5a" stroke-width="1.5" fill="none" />
+              </svg>`;
+            } else if (propType === 'fox') {
+              svg = `<svg width="40" height="36" viewBox="0 0 40 36">
+                <path d="M8,16 L12,6 L16,16" stroke="#7a6a5a" stroke-width="2" fill="none" stroke-linecap="round" />
+                <path d="M24,16 L28,6 L32,16" stroke="#7a6a5a" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="20" cy="22" rx="10" ry="7" fill="#7a6a5a" />
+                <circle cx="17" cy="21" r="1.5" fill="#2a2a2a" />
+                <circle cx="23" cy="21" r="1.5" fill="#2a2a2a" />
+                <path d="M20,24 L18,28 M20,24 L22,28" stroke="#7a6a5a" stroke-width="1.5" fill="none" />
+              </svg>`;
+            } else if (propType === 'island') {
+              svg = `<svg width="40" height="28" viewBox="0 0 40 28">
+                <path d="M0,24 L6,18 L10,20 L14,16 L18,17 L22,14 L26,16 L30,18 L34,20 L40,24 Z" fill="#6a7a6a" />
+                <path d="M12,16 L16,10 L20,12 M24,14 L28,8 L32,11" stroke="#5a6a5a" stroke-width="1.5" fill="none" stroke-linecap="round" />
+              </svg>`;
+            } else if (propType === 'sagebrush') {
+              svg = `<svg width="32" height="36" viewBox="0 0 32 36">
+                <path d="M16,32 L16,24 M12,28 Q12,22 16,20 Q20,22 20,28" stroke="#6a7a5a" stroke-width="2" fill="none" />
+                <path d="M10,24 Q10,18 16,14 Q22,18 22,24" stroke="#6a7a5a" stroke-width="2" fill="none" />
+                <path d="M8,20 Q8,12 16,8 Q24,12 24,20" stroke="#6a7a5a" stroke-width="2" fill="none" />
+              </svg>`;
+            }
+            
+            prop.innerHTML = svg;
+            sceneProps.appendChild(prop);
+          }
+        });
+        
+        // Walking animation
+        if (Math.abs(scrollY - lastScrollY) > 1) {
+          if (!isWalking) {
+            character.classList.add('walking');
+            isWalking = true;
+          }
+          clearTimeout(character.walkTimeout);
+          character.walkTimeout = setTimeout(() => {
+            character.classList.remove('walking');
+            isWalking = false;
+          }, 150);
+        }
+        lastScrollY = scrollY;
+        
+        // Move Voyager sprite
+        const voyagerProgress = Math.min(1, scrollProgress * 1.5);
+        const voyagerX = voyagerProgress * (window.innerWidth - 40);
+        const voyagerY = 3 + Math.sin(voyagerProgress * Math.PI * 2) * 2;
+        voyagerSprite.style.transform = `translate(${voyagerX}px, ${voyagerY}rem)`;
+        
+        // Update timeline path with smooth curves
+        const pathEl = document.getElementById('meandering-path');
+        const pathSvg = document.getElementById('timeline-path');
+        const vw = window.innerWidth;
+        const phase = scrollProgress * 6 * Math.PI;
+        const amplitude = 30;
+        
+        pathSvg.setAttribute('viewBox', `0 0 ${vw * 2} 200`);
+        
+        // Generate smooth curved path using quadratic bezier curves
+        const points = [];
+        for (let i = 0; i <= 24; i++) {
+          const x = (i * vw * 2) / 24;
+          const y = 100 + Math.sin(phase + (i * Math.PI / 3)) * amplitude * (0.8 + Math.sin(i * 0.7) * 0.2);
+          points.push({ x, y });
+        }
+        
+        let pathD = `M${points[0].x},${points[0].y}`;
+        for (let i = 1; i < points.length - 1; i++) {
+          const xc = (points[i].x + points[i + 1].x) / 2;
+          const yc = (points[i].y + points[i + 1].y) / 2;
+          pathD += ` Q${points[i].x},${points[i].y} ${xc},${yc}`;
+        }
+        pathD += ` T${points[points.length - 1].x},${points[points.length - 1].y}`;
+        pathEl.setAttribute('d', pathD);
+        
+        // Show dispatch cards (newest first)
+        const cards = Array.from(dispatchCards.querySelectorAll('.dispatch-card'));
+        let newestCard = null;
+        
+        cards.forEach(card => {
+          const cardYear = parseInt(card.getAttribute('data-year'));
+          const cardIndex = parseInt(card.getAttribute('data-index'));
+          
+          if (currentYear >= cardYear && !shownCards.has(cardIndex)) {
+            // Prepend card to top of feed
+            if (dispatchCards.firstChild) {
+              dispatchCards.insertBefore(card, dispatchCards.firstChild);
+            }
+            
+            setTimeout(() => {
+              card.classList.add('visible', 'newest');
+              shownCards.add(cardIndex);
+              newestCard = card;
+              
+              // Remove 'newest' class after animation
+              setTimeout(() => {
+                card.classList.remove('newest');
+              }, 500);
+            }, 50);
+          }
+        });
+        
+        ticking = false;
+      }
+      
+      // Scroll handler with requestAnimationFrame
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(updateTimeline);
+          ticking = true;
+        }
+      }
+      
+      // Initialize
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateTimeline();
+      
+      // Static timeline for reduced motion
+      function initStaticTimeline() {
+        scrollTimeline.style.display = 'none';
+        staticTimeline.style.display = 'block';
+        
+        const staticMilestones = document.getElementById('static-milestones');
+        const staticVoyagerList = document.getElementById('static-voyager-list');
+        
+        // Add milestones
+        const milestonesHTML = '<h3>Career Milestones</h3><ul>' +
+          siteData.timeline.map(item => 
+            `<li><strong>${item.year}:</strong> ${item.label}${item.description ? ' — ' + item.description : ''}</li>`
+          ).join('') +
+          '</ul>';
+        staticMilestones.innerHTML = milestonesHTML;
+        
+        // Add Voyager events
+        const voyagerHTML = '<h3>Voyager Mission</h3><ul>' +
+          voyagerEvents.map(event =>
+            `<li><strong>${event.date}:</strong> ${event.title} — ${event.text}</li>`
+          ).join('') +
+          '</ul>';
+        staticVoyagerList.innerHTML = voyagerHTML;
+      }
+    })();
+  </script>
 </body>
 </html>
