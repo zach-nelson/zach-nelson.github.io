@@ -27,16 +27,17 @@ async function testTimeline() {
     
     // Calculate scroll position for this year
     // Year range: 1977-2026 (49 years)
-    // Scroll range: 0 to spacer height (9800px)
+    // Scroll range: 0 to spacer height (15400px)
     const yearProgress = (year - 1977) / 49;
-    const scrollY = Math.floor(yearProgress * 9800);
+    const scrollY = Math.floor(yearProgress * 15400);
     
     console.log(`  Scrolling to position ${scrollY}px...`);
     await page.evaluate((scrollPos) => {
-      window.scrollTo(0, scrollPos);
+      document.documentElement.scrollTop = scrollPos;
+      window.scrollTo({ top: scrollPos, behavior: 'instant' });
     }, scrollY);
     
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 800));
     
     // Check year counter
     const displayedYear = await page.$eval('#year-counter', el => el.textContent);

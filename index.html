@@ -501,7 +501,7 @@
     }
     
     .scroll-spacer {
-      height: 9800px;
+      height: 15400px;
       width: 100%;
       pointer-events: none;
     }
@@ -1601,7 +1601,7 @@
       // Update function
       function updateTimeline() {
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const spacerHeight = 9800; // Match the scroll-spacer height
+        const spacerHeight = 15400; // Match the scroll-spacer height
         const scrollProgress = Math.max(0, Math.min(1, scrollY / spacerHeight));
         
         // Map scroll to year (1977-2026, inclusive = 49 years)
