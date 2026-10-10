@@ -650,13 +650,14 @@
     }
     
     .dispatch-feed {
-      position: absolute;
+      position: fixed;
       top: 6rem;
       right: 2rem;
       width: 280px;
       max-height: calc(100vh - 8rem);
       overflow-y: auto;
       z-index: 15;
+      pointer-events: all;
     }
     
     .dispatch-title {
@@ -1600,11 +1601,11 @@
       // Update function
       function updateTimeline() {
         const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const timelineHeight = scrollTimeline.offsetHeight;
-        const scrollProgress = Math.max(0, Math.min(1, scrollY / Math.max(1, timelineHeight)));
+        const spacerHeight = 9800; // Match the scroll-spacer height
+        const scrollProgress = Math.max(0, Math.min(1, scrollY / spacerHeight));
         
-        // Map scroll to year (1977-2026)
-        currentYear = Math.floor(1977 + scrollProgress * 49);
+        // Map scroll to year (1977-2026, inclusive = 49 years)
+        currentYear = Math.round(1977 + scrollProgress * 49);
         currentYear = Math.max(1977, Math.min(2026, currentYear));
         
         // Update year counter

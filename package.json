@@ -1,0 +1,23 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "Personal site served at [https://zach-nelson.github.io/](https://zach-nelson.github.io/)",
+  "main": "data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zach-nelson/zach-nelson.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zach-nelson/zach-nelson.github.io/issues"
+  },
+  "homepage": "https://github.com/zach-nelson/zach-nelson.github.io#readme",
+  "devDependencies": {
+    "puppeteer": "^25.13.0"
+  }
+}
