@@ -497,7 +497,7 @@
       position: relative;
       height: 100vh;
       overflow: hidden;
-      background: var(--paper-warm);
+      background: linear-gradient(180deg, #f5f3f0 0%, var(--paper-warm) 50%, #f5f3f0 100%);
       border-bottom: 2px solid var(--line);
     }
     
@@ -519,9 +519,10 @@
       left: 2rem;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 3rem;
-      font-weight: 500;
-      color: var(--accent);
-      z-index: 10;
+      font-weight: 600;
+      color: var(--ink);
+      text-shadow: 0 0 10px rgba(255,255,255,0.8);
+      z-index: 20;
     }
     
     .voyager-sprite {
@@ -529,17 +530,24 @@
       top: 3rem;
       left: 0;
       transition: transform 0.1s linear;
-      z-index: 5;
+      z-index: 12;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+    
+    .voyager-sprite svg {
+      width: 30px;
+      height: 30px;
     }
     
     .character {
       position: absolute;
-      left: 50%;
+      left: 35%;
       bottom: 30%;
-      width: 60px;
-      height: 115px;
+      width: 80px;
+      height: 130px;
       transform: translateX(-50%);
-      z-index: 10;
+      z-index: 15;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
     }
     
     .character-stage {
@@ -573,6 +581,12 @@
       height: 200px;
       transform: translateY(50%);
       transition: transform 0.1s linear;
+      opacity: 0.8;
+    }
+    
+    .timeline-path path {
+      stroke-width: 4;
+      stroke: var(--accent);
     }
     
     .milestone-markers {
