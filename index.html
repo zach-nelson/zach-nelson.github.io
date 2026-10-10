@@ -692,6 +692,10 @@
       align-items: flex-start;
     }
     
+    .dispatch-card.no-thumbnail {
+      display: block;
+    }
+    
     .dispatch-card.visible {
       opacity: 1;
       transform: translateY(0);
@@ -1689,7 +1693,7 @@
         if (event.image) {
           cardHTML += `<img class="dispatch-thumbnail" src="${event.image}" alt="${event.title}" loading="lazy" />`;
         } else {
-          cardHTML += `<div class="dispatch-thumbnail" style="background: var(--accent-soft);"></div>`;
+          card.classList.add('no-thumbnail');
         }
         
         cardHTML += `
