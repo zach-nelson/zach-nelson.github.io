@@ -207,5 +207,90 @@ const siteData = {
     "grid-models",
     "reproducible",
     "mobile-gis"
+  ],
+  
+  // Voyager mission dispatches (verified dates from NASA/JPL)
+  voyagerEvents: [
+    {
+      date: "1977-08-20",
+      year: 1977,
+      title: "Voyager 2 launches",
+      text: "Voyager 2 lifts off on a Titan/Centaur rocket from Cape Canaveral, Florida.",
+      image: "img/voyager/PIA01480.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://images.nasa.gov/details/PIA01480"
+    },
+    {
+      date: "1977-09-05",
+      year: 1977,
+      title: "Voyager 1 launches",
+      text: "Voyager 1 launches atop its Titan/Centaur-6 from Kennedy Space Center, Florida.",
+      image: "img/voyager/PIA21747.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://photojournal.jpl.nasa.gov/catalog/PIA21747"
+    },
+    {
+      date: "1979-02-13",
+      year: 1979,
+      title: "Jupiter, Io and Europa",
+      text: "Voyager 1 photographs Jupiter with its moons Io and Europa on approach.",
+      image: "img/voyager/PIA00144.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://photojournal.jpl.nasa.gov/catalog/PIA00144"
+    },
+    {
+      date: "1980-11-03",
+      year: 1980,
+      title: "Saturn with Tethys and Dione",
+      text: "Voyager 1 photographs Saturn and two of its moons from 13 million kilometers.",
+      image: "img/voyager/PIA00024.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://images.nasa.gov/details/PIA00024"
+    },
+    {
+      date: "1986-01-24",
+      year: 1986,
+      title: "Uranus",
+      text: "Voyager 2 images Uranus in 1986, the first spacecraft to visit it.",
+      image: "img/voyager/PIA18182.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://images.nasa.gov/details/PIA18182"
+    },
+    {
+      date: "1989-08-25",
+      year: 1989,
+      title: "Neptune",
+      text: "Voyager 2 photographs Neptune almost continuously on August 16-17, 1989.",
+      image: "img/voyager/PIA00046.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://photojournal.jpl.nasa.gov/catalog/PIA00046"
+    },
+    {
+      date: "1990-02-14",
+      year: 1990,
+      title: "Pale Blue Dot",
+      text: "Voyager 1 turns back and photographs Earth as a tiny dot, part of the first portrait of the solar system.",
+      image: "img/voyager/PIA00452.jpg",
+      credit: "NASA/JPL-Caltech",
+      source: "https://photojournal.jpl.nasa.gov/catalog/PIA00452"
+    },
+    {
+      date: "2012-08-25",
+      year: 2012,
+      title: "Voyager 1 enters interstellar space",
+      text: "Voyager 1 crosses the heliopause, entering the space between stars.",
+      image: null,
+      credit: "NASA/JPL-Caltech",
+      source: "https://science.nasa.gov/mission/voyager/"
+    },
+    {
+      date: "2018-11-05",
+      year: 2018,
+      title: "Voyager 2 enters interstellar space",
+      text: "Voyager 2 crosses the heliopause, the second human-made object to reach interstellar space.",
+      image: null,
+      credit: "NASA/JPL-Caltech",
+      source: "https://science.nasa.gov/mission/voyager/"
+    }
   ]
 };
